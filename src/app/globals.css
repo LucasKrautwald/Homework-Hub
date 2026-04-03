@@ -1,26 +1,56 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8f5ff;
+  --foreground: #0f172a;
+  --card: rgba(255, 255, 255, 0.85);
+  --accent: #7c3aed;
+  --accent2: #06b6d4;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Segoe UI", "Apple Color Emoji",
+    "Segoe UI Emoji";
+  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0c0a12;
+    --foreground: #f1f5f9;
+    --card: rgba(15, 23, 42, 0.75);
   }
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  background-color: var(--background);
+  background-image:
+    radial-gradient(ellipse 120% 80% at 100% -20%, rgba(167, 139, 250, 0.35), transparent),
+    radial-gradient(ellipse 80% 60% at -10% 50%, rgba(34, 211, 238, 0.2), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(244, 114, 182, 0.15), transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-image:
+      radial-gradient(ellipse 120% 80% at 100% -10%, rgba(91, 33, 182, 0.45), transparent),
+      radial-gradient(ellipse 80% 50% at -10% 40%, rgba(8, 145, 178, 0.2), transparent),
+      radial-gradient(ellipse 50% 60% at 70% 110%, rgba(190, 24, 93, 0.12), transparent);
+  }
+}
+
+/* nicer inputs */
+input[type="datetime-local"],
+input[type="email"],
+input[type="password"],
+input[type="text"],
+input[type="url"],
+textarea,
+select {
+  -webkit-appearance: none;
 }
