@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "prisma generate",
@@ -12,10 +12,10 @@
     "db:migrate": "prisma migrate dev"
   },
   "dependencies": {
-    "@prisma/adapter-better-sqlite3": "^7.6.0",
+    "@prisma/adapter-pg": "^7.6.0",
     "@prisma/client": "^7.6.0",
     "bcryptjs": "^3.0.3",
-    "better-sqlite3": "^12.8.0",
+    "pg": "^8.20.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dotenv": "^17.4.0",
@@ -30,7 +30,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/bcryptjs": "^2.4.6",
-    "@types/better-sqlite3": "^7.6.13",
+    "@types/pg": "^8.20.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

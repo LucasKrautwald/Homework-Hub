@@ -1,14 +1,41 @@
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
-import { PrismaClient } from "@/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
+import { PrismaClient } from "../generated/prisma/client";
 
-const dbUrl = process.env.DATABASE_URL ?? "file:./prisma/dev.db";
-const adapter = new PrismaBetterSqlite3({ url: dbUrl });
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+  pool: Pool | undefined;
+};
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient | undefined };
+function createPrismaClient(): PrismaClient {
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error("DATABASE_URL is not set");
+  }
 
-export const prisma =
-  globalForPrisma.prisma ?? new PrismaClient({ adapter });
+  const pool =
+    globalForPrisma.pool ?? new Pool({ connectionString });
+  globalForPrisma.pool = pool;
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+  const adapter = new PrismaPg(pool);
+  return new PrismaClient({ adapter });
 }
+
+function getPrisma(): PrismaClient {
+  if (!globalForPrisma.prisma) {
+    globalForPrisma.prisma = createPrismaClient();
+  }
+  return globalForPrisma.prisma;
+}
+
+/** Lazy proxy so importing this module never touches the DB until first query (safer for build / prerender). */
+export const prisma = new Proxy({} as PrismaClient, {
+  get(_target, prop: keyof PrismaClient) {
+    const client = getPrisma();
+    const value = client[prop];
+    if (typeof value === "function") {
+      return value.bind(client);
+    }
+    return value;
+  },
+});

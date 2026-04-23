@@ -19,8 +19,8 @@ const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
   "clientVersion": "7.6.0",
   "engineVersion": "75cbdc1eb7150937890ad5465d861175c6624711",
-  "activeProvider": "sqlite",
-  "inlineSchema": "// https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n\nmodel User {\n  id           String   @id @default(cuid())\n  email        String   @unique\n  passwordHash String\n  name         String?\n  tasks        Task[]\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n}\n\nmodel Task {\n  id        String       @id @default(cuid())\n  userId    String\n  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)\n  title     String\n  subject   String?\n  notes     String?\n  dueAt     DateTime\n  category  TaskCategory\n  status    TaskStatus   @default(TODO)\n  priority  TaskPriority @default(MEDIUM)\n  googleUrl String?\n  createdAt DateTime     @default(now())\n  updatedAt DateTime     @updatedAt\n\n  @@index([userId, dueAt])\n}\n\nenum TaskCategory {\n  short\n  long\n}\n\nenum TaskStatus {\n  TODO\n  IN_PROGRESS\n  DONE\n}\n\nenum TaskPriority {\n  LOW\n  MEDIUM\n  HIGH\n}\n",
+  "activeProvider": "postgresql",
+  "inlineSchema": "// https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id           String   @id @default(cuid())\n  email        String   @unique\n  passwordHash String\n  name         String?\n  tasks        Task[]\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n}\n\nmodel Task {\n  id        String       @id @default(cuid())\n  userId    String\n  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)\n  title     String\n  subject   String?\n  notes     String?\n  dueAt     DateTime\n  category  TaskCategory\n  status    TaskStatus   @default(TODO)\n  priority  TaskPriority @default(MEDIUM)\n  googleUrl String?\n  createdAt DateTime     @default(now())\n  updatedAt DateTime     @updatedAt\n\n  @@index([userId, dueAt])\n}\n\nenum TaskCategory {\n  short\n  long\n}\n\nenum TaskStatus {\n  TODO\n  IN_PROGRESS\n  DONE\n}\n\nenum TaskPriority {\n  LOW\n  MEDIUM\n  HIGH\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -45,10 +45,10 @@ async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Modul
 }
 
 config.compilerWasm = {
-  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.mjs"),
+  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.mjs"),
 
   getQueryCompilerWasmModule: async () => {
-    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.wasm-base64.mjs")
+    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.wasm-base64.mjs")
     return await decodeBase64AsWasm(wasm)
   },
 

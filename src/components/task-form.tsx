@@ -15,6 +15,8 @@ import { cn } from "@/lib/cn";
 
 type Props = {
   taskId?: string;
+  /** When true, focuses the title field on mount (e.g. “Quick add” entry). */
+  autoFocusTitle?: boolean;
   initial?: {
     title: string;
     subject: string;
@@ -51,7 +53,7 @@ const priorityOptions: {
   { value: "HIGH", label: "High", color: "from-rose-500 to-red-500" },
 ];
 
-export function TaskForm({ taskId, initial }: Props) {
+export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
   const router = useRouter();
   const [title, setTitle] = useState(initial?.title ?? "");
   const [subject, setSubject] = useState(initial?.subject ?? "");
@@ -116,6 +118,7 @@ export function TaskForm({ taskId, initial }: Props) {
         Title
         <input
           required
+          autoFocus={Boolean(autoFocusTitle)}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="e.g. Biology chapter 5 questions"

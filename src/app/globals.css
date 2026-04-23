@@ -18,7 +18,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0c0a12;
+    --background: #030305;
     --foreground: #f1f5f9;
     --card: rgba(15, 23, 42, 0.75);
   }
@@ -38,9 +38,9 @@ body {
 @media (prefers-color-scheme: dark) {
   body {
     background-image:
-      radial-gradient(ellipse 120% 80% at 100% -10%, rgba(91, 33, 182, 0.45), transparent),
-      radial-gradient(ellipse 80% 50% at -10% 40%, rgba(8, 145, 178, 0.2), transparent),
-      radial-gradient(ellipse 50% 60% at 70% 110%, rgba(190, 24, 93, 0.12), transparent);
+      radial-gradient(ellipse 50% 40% at 92% 0%, rgba(6, 182, 212, 0.18), transparent),
+      radial-gradient(ellipse 35% 25% at 0% 50%, rgba(8, 145, 178, 0.1), transparent),
+      radial-gradient(ellipse 30% 45% at 55% 100%, rgba(20, 184, 166, 0.07), transparent);
   }
 }
 

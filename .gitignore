@@ -43,3 +43,6 @@ next-env.d.ts
 # local SQLite database
 /prisma/*.db
 /prisma/*.db-journal
+
+# Nested copy with broken git metadata (iCloud duplicate); app lives at repo root.
+/homework-hub/
