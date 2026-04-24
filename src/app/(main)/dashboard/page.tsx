@@ -79,12 +79,6 @@ export default async function DashboardPage() {
                 null
               }
             />
-            <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-white">
-              Dashboard
-            </h1>
-            <p className="mt-2 max-w-md text-sm font-medium text-slate-400">
-              Vista rápida de lo que vence y lo que sigue en tu semana.
-            </p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <DashboardQuickAdd />
@@ -204,10 +198,10 @@ function StatCard({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-2xl border p-5 shadow-lg shadow-black/30 ring-1 ring-inset ring-white/[0.06]",
+        "relative overflow-hidden rounded-2xl border p-5 shadow-lg shadow-black/35 ring-1 ring-inset ring-white/[0.08]",
         variant === "danger"
-          ? "border-rose-400/35 bg-[#2a141c] shadow-rose-950/20"
-          : "border-white/[0.14] bg-[#242136] shadow-indigo-950/25",
+          ? "border-rose-400/40 bg-[#3a1c26] shadow-rose-950/25"
+          : "border-white/[0.16] bg-[#2f2b45] shadow-indigo-950/30",
       )}
     >
       <div className="flex items-start justify-between gap-3">
@@ -320,6 +314,7 @@ function TaskRow({
             {formatTaskDueLabel(task.dueAt)}
           </span>
           <Badge
+            size="compact"
             tone={task.category === "long" ? "amber" : "cyan"}
             className={
               task.category === "long"
@@ -329,10 +324,11 @@ function TaskRow({
           >
             {task.category === "long" ? "Proyecto largo" : "Corta"}
           </Badge>
-          <Badge tone="slate" className="!text-slate-300">
+          <Badge size="compact" tone="slate" className="!text-slate-300">
             {task.status.replace("_", " ")}
           </Badge>
           <Badge
+            size="compact"
             tone={
               task.priority === "HIGH"
                 ? "rose"

@@ -56,7 +56,7 @@ export function AppNav() {
                 className={cn(
                   "inline-flex items-center gap-1.5 rounded-lg border-b-2 border-transparent px-3 py-2 text-sm font-semibold transition-colors",
                   active
-                    ? "border-violet-600 text-violet-900 dark:border-cyan-400/70 dark:text-cyan-100"
+                    ? "border-violet-700 font-bold text-slate-950 dark:border-cyan-300 dark:text-white"
                     : "text-slate-600 hover:border-violet-300/50 hover:text-violet-800 dark:text-slate-400 dark:hover:border-white/10 dark:hover:text-violet-100",
                 )}
               >

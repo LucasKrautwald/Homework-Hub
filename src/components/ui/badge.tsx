@@ -18,16 +18,21 @@ const tones: Record<Tone, string> = {
 export function Badge({
   children,
   tone = "slate",
+  size = "default",
   className,
 }: {
   children: React.ReactNode;
   tone?: Tone;
+  size?: "default" | "compact";
   className?: string;
 }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1 ring-inset",
+        "inline-flex items-center rounded-full font-medium ring-1 ring-inset",
+        size === "compact"
+          ? "px-1.5 py-px text-xs leading-tight"
+          : "px-2.5 py-0.5 text-xs font-semibold",
         tones[tone],
         className,
       )}

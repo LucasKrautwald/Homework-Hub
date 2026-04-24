@@ -27,8 +27,8 @@ export function DashboardGreeting({
     phrase && first ? `${phrase}, ${first}` : phrase ?? null;
 
   return (
-    <p
-      className="text-base font-semibold tracking-tight text-violet-200/95"
+    <h1
+      className="text-3xl font-extrabold tracking-tight text-white"
       aria-live="polite"
     >
       {line ?? (
@@ -36,6 +36,6 @@ export function DashboardGreeting({
           Buenos días
         </span>
       )}
-    </p>
+    </h1>
   );
 }
