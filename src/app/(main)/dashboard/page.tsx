@@ -20,6 +20,28 @@ function formatTaskDueLabel(d: Date) {
   return format(d, "d MMM", { locale: es }).replace(/\./g, "").trim();
 }
 
+function categoryShortLabel(category: string) {
+  return category === "long" ? "Long" : "Short";
+}
+
+function statusShortLabel(status: string) {
+  const map: Record<string, string> = {
+    TODO: "Todo",
+    IN_PROGRESS: "In progress",
+    DONE: "Done",
+  };
+  return map[status] ?? status.replace("_", " ");
+}
+
+function priorityShortLabel(priority: string) {
+  const map: Record<string, string> = {
+    LOW: "Low",
+    MEDIUM: "Med",
+    HIGH: "High",
+  };
+  return map[priority] ?? priority;
+}
+
 export default async function DashboardPage() {
   const session = await auth();
   if (!session?.user?.id) return null;
@@ -44,7 +66,7 @@ export default async function DashboardPage() {
   return (
     <div className="relative isolate -mx-4 min-h-[calc(100vh-6rem)] overflow-hidden px-4 pb-10 text-slate-200 sm:-mx-6 sm:px-6">
       <div
-        className="pointer-events-none absolute inset-0 -z-20 bg-[#030305]"
+        className="pointer-events-none absolute inset-0 -z-20 bg-[#0a0010]"
         aria-hidden
       />
       <div
@@ -52,10 +74,10 @@ export default async function DashboardPage() {
         aria-hidden
         style={{
           background: `
-            radial-gradient(ellipse 75% 60% at 0% 0%, rgba(109, 40, 217, 0.32), transparent 58%),
-            radial-gradient(ellipse 70% 55% at 100% 100%, rgba(55, 48, 163, 0.34), transparent 58%),
-            radial-gradient(ellipse 50% 40% at 88% 8%, rgba(139, 92, 246, 0.12), transparent 50%),
-            radial-gradient(ellipse 45% 35% at 8% 92%, rgba(67, 56, 202, 0.1), transparent 48%)
+            radial-gradient(ellipse 78% 65% at 0% 0%, rgba(88, 28, 135, 0.38), transparent 55%),
+            radial-gradient(ellipse 72% 58% at 100% 100%, rgba(76, 29, 149, 0.28), transparent 52%),
+            radial-gradient(ellipse 45% 38% at 96% 4%, rgba(124, 58, 237, 0.14), transparent 45%),
+            radial-gradient(ellipse 40% 32% at 4% 96%, rgba(91, 33, 182, 0.12), transparent 45%)
           `,
         }}
       />
@@ -98,8 +120,8 @@ export default async function DashboardPage() {
             value={openCount}
             icon={
               <ClipboardList
-                className="h-6 w-6 text-cyan-300/90"
-                strokeWidth={1.25}
+                className="h-6 w-6 text-white/[0.22]"
+                strokeWidth={1}
               />
             }
           />
@@ -109,8 +131,8 @@ export default async function DashboardPage() {
             value={thisWeek.length}
             icon={
               <CalendarDays
-                className="h-6 w-6 text-amber-200/90"
-                strokeWidth={1.25}
+                className="h-6 w-6 text-white/[0.22]"
+                strokeWidth={1}
               />
             }
           />
@@ -120,8 +142,8 @@ export default async function DashboardPage() {
             value={overdue.length}
             icon={
               <AlertTriangle
-                className="h-6 w-6 text-rose-400"
-                strokeWidth={1.25}
+                className="h-6 w-6 text-white/[0.22]"
+                strokeWidth={1}
               />
             }
             variant="danger"
@@ -212,17 +234,17 @@ function StatCard({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-2xl border p-5 shadow-lg shadow-black/40",
+        "relative overflow-hidden rounded-2xl border border-white/[0.08] p-5 shadow-md shadow-black/50",
         variant === "danger"
-          ? "border-[#7f1d1d] bg-[#221018] shadow-rose-950/30"
-          : "border-[#1e293b] bg-[#0d0c15] shadow-black/50",
+          ? "bg-[#221018]"
+          : "bg-[#0e0c12]",
       )}
     >
       <div className="flex items-start justify-between gap-3">
         <p className="text-xs font-bold uppercase tracking-widest text-slate-500">
           {label}
         </p>
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04]">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/[0.06] bg-white/[0.02]">
           {icon}
         </span>
       </div>
@@ -278,7 +300,7 @@ function TaskSection({
         </span>
       </div>
       {count === 0 ? (
-        <div className="rounded-2xl border border-dashed border-white/[0.14] bg-[#0d0c15]/90 px-5 py-8 text-center text-sm">
+        <div className="rounded-2xl border border-dashed border-white/[0.1] bg-[#0e0c12] px-5 py-8 text-center text-sm">
           {empty}
         </div>
       ) : (
@@ -295,6 +317,7 @@ function TaskRow({
   task: {
     id: string;
     title: string;
+    subject: string | null;
     dueAt: Date;
     category: string;
     status: string;
@@ -304,16 +327,22 @@ function TaskRow({
 }) {
   const done = task.status === "DONE";
   const bar = {
-    overdue: "border-l-[#f43f5e] bg-[#180a0a]",
-    week: "border-l-[#f59e0b] bg-[#100e18]",
-    later: "border-l-[#3b82f6] bg-[#100e18]",
+    overdue: "border-l-[#f43f5e]",
+    week: "border-l-[#f59e0b]",
+    later: "border-l-[#3b82f6]",
+  }[section];
+  const rowBg = {
+    overdue: "bg-[#150808]",
+    week: "bg-[#0e0c12]",
+    later: "bg-[#0e0c12]",
   }[section];
 
   return (
     <div
       className={cn(
-        "group/row flex items-stretch gap-3 rounded-xl border border-[#1e293b]/80 border-l-2 p-3 shadow-md shadow-black/25 backdrop-blur-sm transition-colors duration-150",
-        "hover:border-slate-500/70 hover:bg-[#161422] hover:shadow-lg hover:shadow-black/40",
+        "group/row flex items-stretch gap-3 rounded-xl border border-white/[0.06] border-l-2 p-3 shadow-sm shadow-black/40 backdrop-blur-sm transition-colors duration-150",
+        rowBg,
+        "hover:border-white/[0.11] hover:bg-[#14111c] hover:shadow-md hover:shadow-black/50",
         bar,
       )}
     >
@@ -322,27 +351,32 @@ function TaskRow({
         href={`/tasks/${task.id}`}
         className="min-w-0 flex-1 py-0.5 outline-offset-2 transition-colors group-hover/row:text-white"
       >
-        <span className="block font-semibold text-white">{task.title}</span>
-        <span className="mt-1 flex flex-wrap items-center gap-2 text-xs text-slate-500 group-hover/row:text-slate-400">
-          <span className="font-medium text-slate-400 tabular-nums group-hover/row:text-slate-300">
+        <span className="block font-semibold text-white">
+          {task.title}
+          {task.subject ? (
+            <span className="font-medium text-slate-400">
+              {" "}
+              · {task.subject}
+            </span>
+          ) : null}
+        </span>
+        <span className="mt-1 flex flex-wrap items-center gap-1.5 text-xs text-slate-500 group-hover/row:text-slate-400">
+          <span className="font-medium text-slate-500 tabular-nums group-hover/row:text-slate-400">
             {formatTaskDueLabel(task.dueAt)}
           </span>
           <Badge
-            size="compact"
+            variant="subtle"
+            size="xs"
             tone={task.category === "long" ? "amber" : "cyan"}
-            className={
-              task.category === "long"
-                ? "!text-amber-100"
-                : "!text-cyan-200"
-            }
           >
-            {task.category === "long" ? "Proyecto largo" : "Corta"}
+            {categoryShortLabel(task.category)}
           </Badge>
-          <Badge size="compact" tone="slate" className="!text-slate-300">
-            {task.status.replace("_", " ")}
+          <Badge variant="subtle" size="xs" tone="slate">
+            {statusShortLabel(task.status)}
           </Badge>
           <Badge
-            size="compact"
+            variant="subtle"
+            size="xs"
             tone={
               task.priority === "HIGH"
                 ? "rose"
@@ -350,15 +384,8 @@ function TaskRow({
                   ? "amber"
                   : "emerald"
             }
-            className={
-              task.priority === "HIGH"
-                ? "!text-rose-100"
-                : task.priority === "MEDIUM"
-                  ? "!text-amber-100"
-                  : "!text-emerald-100"
-            }
           >
-            {task.priority}
+            {priorityShortLabel(task.priority)}
           </Badge>
         </span>
       </Link>
