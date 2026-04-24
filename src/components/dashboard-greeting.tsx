@@ -28,11 +28,14 @@ export function DashboardGreeting({
 
   return (
     <h1
-      className="text-3xl font-extrabold tracking-tight text-white"
+      className="bg-gradient-to-r from-violet-300 via-fuchsia-100 to-white bg-clip-text text-3xl font-extrabold tracking-tight text-transparent"
       aria-live="polite"
     >
       {line ?? (
-        <span className="invisible" aria-hidden>
+        <span
+          className="invisible bg-gradient-to-r from-violet-300 via-fuchsia-100 to-white bg-clip-text"
+          aria-hidden
+        >
           Buenos días
         </span>
       )}

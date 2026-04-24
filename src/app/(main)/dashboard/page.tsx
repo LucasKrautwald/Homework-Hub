@@ -44,19 +44,18 @@ export default async function DashboardPage() {
   return (
     <div className="relative isolate -mx-4 min-h-[calc(100vh-6rem)] overflow-hidden px-4 pb-10 text-slate-200 sm:-mx-6 sm:px-6">
       <div
-        className="pointer-events-none absolute inset-0 -z-20 bg-[#0a0614]"
+        className="pointer-events-none absolute inset-0 -z-20 bg-[#030305]"
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-90"
+        className="pointer-events-none absolute inset-0 -z-10"
         aria-hidden
         style={{
           background: `
-            radial-gradient(ellipse 55% 42% at 85% 0%, rgba(139, 92, 246, 0.22), transparent 55%),
-            radial-gradient(ellipse 40% 36% at 12% 18%, rgba(99, 102, 241, 0.18), transparent 50%),
-            radial-gradient(ellipse 50% 40% at 92% 0%, rgba(6, 182, 212, 0.14), transparent 52%),
-            radial-gradient(ellipse 35% 28% at 0% 55%, rgba(79, 70, 229, 0.12), transparent 48%),
-            radial-gradient(ellipse 32% 42% at 52% 100%, rgba(20, 184, 166, 0.08), transparent 50%)
+            radial-gradient(ellipse 75% 60% at 0% 0%, rgba(109, 40, 217, 0.32), transparent 58%),
+            radial-gradient(ellipse 70% 55% at 100% 100%, rgba(55, 48, 163, 0.34), transparent 58%),
+            radial-gradient(ellipse 50% 40% at 88% 8%, rgba(139, 92, 246, 0.12), transparent 50%),
+            radial-gradient(ellipse 45% 35% at 8% 92%, rgba(67, 56, 202, 0.1), transparent 48%)
           `,
         }}
       />
@@ -97,19 +96,34 @@ export default async function DashboardPage() {
             label="Tareas abiertas"
             hint="Sin completar"
             value={openCount}
-            icon={<ClipboardList className="h-6 w-6 text-cyan-400/90" />}
+            icon={
+              <ClipboardList
+                className="h-6 w-6 text-cyan-300/90"
+                strokeWidth={1.25}
+              />
+            }
           />
           <StatCard
             label="Vencen esta semana"
             hint="Hasta el domingo"
             value={thisWeek.length}
-            icon={<CalendarDays className="h-6 w-6 text-amber-300/90" />}
+            icon={
+              <CalendarDays
+                className="h-6 w-6 text-amber-200/90"
+                strokeWidth={1.25}
+              />
+            }
           />
           <StatCard
             label="Vencidas"
             hint="Fecha anterior a hoy"
             value={overdue.length}
-            icon={<AlertTriangle className="h-6 w-6 text-rose-400" />}
+            icon={
+              <AlertTriangle
+                className="h-6 w-6 text-rose-400"
+                strokeWidth={1.25}
+              />
+            }
             variant="danger"
           />
         </div>
@@ -198,24 +212,24 @@ function StatCard({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-2xl border p-5 shadow-lg shadow-black/35 ring-1 ring-inset ring-white/[0.08]",
+        "relative overflow-hidden rounded-2xl border p-5 shadow-lg shadow-black/40",
         variant === "danger"
-          ? "border-rose-400/40 bg-[#3a1c26] shadow-rose-950/25"
-          : "border-white/[0.16] bg-[#2f2b45] shadow-indigo-950/30",
+          ? "border-[#7f1d1d] bg-[#221018] shadow-rose-950/30"
+          : "border-[#1e293b] bg-[#0d0c15] shadow-black/50",
       )}
     >
       <div className="flex items-start justify-between gap-3">
         <p className="text-xs font-bold uppercase tracking-widest text-slate-500">
           {label}
         </p>
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.1] bg-white/[0.08]">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04]">
           {icon}
         </span>
       </div>
       <p
         className={cn(
           "mt-3 text-4xl font-black tabular-nums tracking-tight text-white",
-          variant === "danger" && "text-rose-100",
+          variant === "danger" && "text-[#fb7185]",
         )}
       >
         {value}
@@ -239,9 +253,9 @@ function TaskSection({
   children: ReactNode;
 }) {
   const bar = {
-    rose: "bg-rose-500",
-    amber: "bg-amber-500",
-    blue: "bg-blue-500",
+    rose: "bg-[#f43f5e]",
+    amber: "bg-[#f59e0b]",
+    blue: "bg-[#3b82f6]",
   }[accent];
 
   return (
@@ -264,7 +278,7 @@ function TaskSection({
         </span>
       </div>
       {count === 0 ? (
-        <div className="rounded-2xl border border-dashed border-white/[0.12] bg-[#0f0d18]/80 px-5 py-8 text-center text-sm">
+        <div className="rounded-2xl border border-dashed border-white/[0.14] bg-[#0d0c15]/90 px-5 py-8 text-center text-sm">
           {empty}
         </div>
       ) : (
@@ -290,16 +304,16 @@ function TaskRow({
 }) {
   const done = task.status === "DONE";
   const bar = {
-    overdue: "border-l-rose-500 bg-[#180a0a]/95",
-    week: "border-l-amber-500 bg-[#0f0d18]/95",
-    later: "border-l-blue-500 bg-[#0f0d18]/95",
+    overdue: "border-l-[#f43f5e] bg-[#180a0a]",
+    week: "border-l-[#f59e0b] bg-[#100e18]",
+    later: "border-l-[#3b82f6] bg-[#100e18]",
   }[section];
 
   return (
     <div
       className={cn(
-        "group/row flex items-stretch gap-3 rounded-xl border border-white/[0.06] border-l-2 p-3 shadow-md shadow-black/15 backdrop-blur-sm transition-colors duration-150",
-        "hover:border-white/[0.14] hover:bg-white/[0.06] hover:shadow-lg hover:shadow-black/25",
+        "group/row flex items-stretch gap-3 rounded-xl border border-[#1e293b]/80 border-l-2 p-3 shadow-md shadow-black/25 backdrop-blur-sm transition-colors duration-150",
+        "hover:border-slate-500/70 hover:bg-[#161422] hover:shadow-lg hover:shadow-black/40",
         bar,
       )}
     >
