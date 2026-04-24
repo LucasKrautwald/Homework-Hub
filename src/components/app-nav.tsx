@@ -24,7 +24,7 @@ export function AppNav() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/40 bg-white/70 shadow-sm backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/60">
+    <header className="sticky top-0 z-50 border-b border-slate-200/90 bg-white/92 shadow-sm shadow-slate-900/5 backdrop-blur-xl dark:border-b dark:border-violet-500/12 dark:bg-[#0e0c16]/96 dark:shadow-[inset_0_-1px_0_0_rgba(255,255,255,0.04)]">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
         <Link
           href="/dashboard"

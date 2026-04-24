@@ -44,6 +44,17 @@ body {
   }
 }
 
+dialog.hh-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  max-height: min(90vh, calc(100vh - 2rem));
+  width: min(100vw - 2rem, 22rem);
+  overflow: auto;
+  transform: translate(-50%, -50%);
+}
+
 dialog.hh-dialog::backdrop {
   background: rgb(0 0 0 / 0.55);
 }

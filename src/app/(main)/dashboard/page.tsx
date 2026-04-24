@@ -1,14 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import {
-  endOfWeek,
-  format,
-  isAfter,
-  isBefore,
-  isWithinInterval,
-  startOfDay,
-  startOfWeek,
-} from "date-fns";
+import { endOfWeek, format, isAfter, isBefore, startOfDay } from "date-fns";
 import { es } from "date-fns/locale";
 import {
   AlertTriangle,
@@ -37,7 +29,6 @@ export default async function DashboardPage() {
   });
 
   const today = startOfDay(new Date());
-  const weekStart = startOfWeek(today, { weekStartsOn: 1 });
   const weekEnd = endOfWeek(today, { weekStartsOn: 1 });
 
   const notDone = tasks.filter((t) => t.status !== "DONE");
@@ -48,14 +39,6 @@ export default async function DashboardPage() {
     (t) => !isBefore(t.dueAt, today) && !isAfter(t.dueAt, weekEnd),
   );
   const later = notDone.filter((t) => isAfter(t.dueAt, weekEnd));
-
-  const weekTasks = tasks.filter((t) =>
-    isWithinInterval(t.dueAt, { start: weekStart, end: weekEnd }),
-  );
-  const weekDone = weekTasks.filter((t) => t.status === "DONE").length;
-  const weekProgress = weekTasks.length
-    ? Math.round((weekDone / weekTasks.length) * 100)
-    : 0;
 
   return (
     <div className="relative isolate -mx-4 min-h-[calc(100vh-6rem)] overflow-hidden px-4 pb-10 text-slate-200 sm:-mx-6 sm:px-6">
@@ -107,42 +90,6 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <div
-          className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-white/[0.07] pb-4 text-xs font-medium text-slate-500"
-          aria-label="Resumen de tareas"
-        >
-          <span className="inline-flex items-center gap-2">
-            <ClipboardList
-              className="h-3.5 w-3.5 shrink-0 text-cyan-400/80"
-              aria-hidden
-            />
-            <span className="tabular-nums text-slate-300">{openCount}</span>
-            <span>abiertas</span>
-          </span>
-          <span className="h-3 w-px bg-white/10" aria-hidden />
-          <span className="inline-flex items-center gap-2">
-            <CalendarDays
-              className="h-3.5 w-3.5 shrink-0 text-amber-400/85"
-              aria-hidden
-            />
-            <span className="tabular-nums text-slate-300">
-              {thisWeek.length}
-            </span>
-            <span>vencen esta semana</span>
-          </span>
-          <span className="h-3 w-px bg-white/10" aria-hidden />
-          <span className="inline-flex items-center gap-2">
-            <AlertTriangle
-              className="h-3.5 w-3.5 shrink-0 text-rose-400/90"
-              aria-hidden
-            />
-            <span className="tabular-nums text-slate-300">
-              {overdue.length}
-            </span>
-            <span>vencidas</span>
-          </span>
-        </div>
-
         <div className="grid gap-4 sm:grid-cols-3">
           <StatCard
             label="Tareas abiertas"
@@ -164,28 +111,6 @@ export default async function DashboardPage() {
             variant="danger"
           />
         </div>
-
-        <section className="rounded-2xl border border-white/[0.08] bg-[#0f0d18]/90 p-5 shadow-xl shadow-indigo-950/30 backdrop-blur-sm">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-cyan-400/90">
-                Progreso semanal
-              </p>
-              <p className="mt-1 text-sm text-slate-400">
-                {weekDone} / {weekTasks.length} tareas completadas esta semana
-              </p>
-            </div>
-            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm font-bold tabular-nums text-cyan-200">
-              {weekProgress}%
-            </span>
-          </div>
-          <div className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-slate-800/80">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-teal-500"
-              style={{ width: `${weekProgress}%` }}
-            />
-          </div>
-        </section>
 
         <TaskSection
           title="Vencidas"
@@ -273,15 +198,15 @@ function StatCard({
       className={cn(
         "relative overflow-hidden rounded-2xl border p-5 shadow-lg shadow-black/25",
         variant === "danger"
-          ? "border-rose-900/45 bg-[#120a0a]"
-          : "border-slate-700/50 bg-[#0f0d18]",
+          ? "border-rose-400/25 bg-[#221018]"
+          : "border-white/[0.12] bg-[#1a1629]",
       )}
     >
       <div className="flex items-start justify-between gap-3">
         <p className="text-xs font-bold uppercase tracking-widest text-slate-500">
           {label}
         </p>
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.06] bg-white/[0.04]">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-white/[0.1] bg-white/[0.08]">
           {icon}
         </span>
       </div>

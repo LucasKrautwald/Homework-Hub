@@ -84,7 +84,7 @@ export function DashboardQuickAdd() {
       <dialog
         ref={dialogRef}
         aria-labelledby={titleId}
-        className="hh-dialog w-[min(100%,22rem)] rounded-2xl border border-white/10 bg-[#12101c] p-6 text-slate-200 shadow-2xl shadow-black/50"
+        className="hh-dialog rounded-2xl border border-white/15 bg-[#1a1629] p-6 text-slate-200 shadow-2xl shadow-black/50"
         onClick={(ev) => {
           if (ev.target === dialogRef.current) close();
         }}
