@@ -54,10 +54,10 @@ export function AppNav() {
                 key={href}
                 href={href}
                 className={cn(
-                  "inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition-all",
+                  "inline-flex items-center gap-1.5 rounded-lg border-b-2 border-transparent px-3 py-2 text-sm font-semibold transition-colors",
                   active
-                    ? "bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-md shadow-violet-500/25"
-                    : "text-slate-600 hover:bg-violet-100/80 hover:text-violet-900 dark:text-slate-400 dark:hover:bg-violet-950/50 dark:hover:text-violet-100",
+                    ? "border-violet-600 text-violet-900 dark:border-cyan-400/70 dark:text-cyan-100"
+                    : "text-slate-600 hover:border-violet-300/50 hover:text-violet-800 dark:text-slate-400 dark:hover:border-white/10 dark:hover:text-violet-100",
                 )}
               >
                 <Icon className="h-4 w-4 shrink-0 opacity-90" />

@@ -12,6 +12,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { Badge } from "@/components/ui/badge";
 import { TaskQuickComplete } from "@/components/task-quick-complete";
+import { DashboardGreeting } from "@/components/dashboard-greeting";
 import { DashboardQuickAdd } from "@/components/dashboard-quick-add";
 import { cn } from "@/lib/cn";
 
@@ -71,7 +72,14 @@ export default async function DashboardPage() {
       <div className="relative z-0 space-y-8 pt-1">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-white">
+            <DashboardGreeting
+              displayName={
+                session.user.name ??
+                session.user.email?.split("@")[0] ??
+                null
+              }
+            />
+            <h1 className="mt-1 text-3xl font-extrabold tracking-tight text-white">
               Dashboard
             </h1>
             <p className="mt-2 max-w-md text-sm font-medium text-slate-400">
@@ -196,10 +204,10 @@ function StatCard({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-2xl border p-5 shadow-lg shadow-black/25",
+        "relative overflow-hidden rounded-2xl border p-5 shadow-lg shadow-black/30 ring-1 ring-inset ring-white/[0.06]",
         variant === "danger"
-          ? "border-rose-400/25 bg-[#221018]"
-          : "border-white/[0.12] bg-[#1a1629]",
+          ? "border-rose-400/35 bg-[#2a141c] shadow-rose-950/20"
+          : "border-white/[0.14] bg-[#242136] shadow-indigo-950/25",
       )}
     >
       <div className="flex items-start justify-between gap-3">
@@ -245,7 +253,7 @@ function TaskSection({
   return (
     <section className="space-y-3">
       <div className="flex items-center gap-3">
-        <span className={cn("h-8 w-1 rounded-full", bar)} aria-hidden />
+        <span className={cn("h-7 w-[2px] shrink-0 rounded-full", bar)} aria-hidden />
         <h2 className="text-lg font-bold text-white">{title}</h2>
         <span
           className={cn(
@@ -296,7 +304,7 @@ function TaskRow({
   return (
     <div
       className={cn(
-        "group/row flex items-stretch gap-3 rounded-xl border border-white/[0.06] border-l-4 p-3 shadow-md shadow-black/15 backdrop-blur-sm transition-colors duration-150",
+        "group/row flex items-stretch gap-3 rounded-xl border border-white/[0.06] border-l-2 p-3 shadow-md shadow-black/15 backdrop-blur-sm transition-colors duration-150",
         "hover:border-white/[0.14] hover:bg-white/[0.06] hover:shadow-lg hover:shadow-black/25",
         bar,
       )}
