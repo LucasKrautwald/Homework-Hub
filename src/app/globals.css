@@ -44,8 +44,13 @@ body {
   }
 }
 
+dialog.hh-dialog::backdrop {
+  background: rgb(0 0 0 / 0.55);
+}
+
 /* nicer inputs */
 input[type="datetime-local"],
+input[type="date"],
 input[type="email"],
 input[type="password"],
 input[type="text"],
