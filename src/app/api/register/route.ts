@@ -42,7 +42,8 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (err) {
+    console.error("Register error:", err);
     return NextResponse.json(
       { error: "Could not create account." },
       { status: 500 },
