@@ -1,11 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f5ff;
-  --foreground: #0f172a;
-  --card: rgba(255, 255, 255, 0.85);
-  --accent: #7c3aed;
-  --accent2: #06b6d4;
+  --background: #0a0a0f;
+  --foreground: #e8eefc;
+  --card: rgba(255, 255, 255, 0.04);
+  --accent: #8b5cf6;
+  --accent2: #3b82f6;
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
 }
 
 @theme inline {
@@ -16,14 +18,6 @@
   --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #060913;
-    --foreground: #e8eefc;
-    --card: rgba(15, 23, 42, 0.62);
-  }
-}
-
 html {
   scroll-behavior: smooth;
 }
@@ -32,21 +26,18 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   min-height: 100vh;
-  background-color: var(--background);
+  background-color: #0a0a0f;
   background-image:
-    radial-gradient(ellipse 120% 80% at 100% -20%, rgba(167, 139, 250, 0.35), transparent),
-    radial-gradient(ellipse 80% 60% at -10% 50%, rgba(34, 211, 238, 0.2), transparent),
-    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(244, 114, 182, 0.15), transparent);
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background-image:
-      linear-gradient(180deg, #030409 0%, #0f172a 60%, #131c3a 100%),
-      radial-gradient(ellipse 62% 48% at 92% 0%, rgba(99, 102, 241, 0.16), transparent),
-      radial-gradient(ellipse 45% 35% at 0% 50%, rgba(56, 189, 248, 0.1), transparent);
-    background-blend-mode: normal, screen, screen;
-  }
+    radial-gradient(
+      ellipse 900px 700px at 100% 0%,
+      rgba(139, 92, 246, 0.15),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 900px 700px at 0% 100%,
+      rgba(59, 130, 246, 0.1),
+      transparent 70%
+    );
 }
 
 dialog.hh-dialog {
@@ -65,9 +56,9 @@ dialog.hh-dialog[open] {
 }
 
 dialog.hh-dialog::backdrop {
-  background: rgb(2 6 23 / 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgb(10 10 15 / 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   animation: hh-fade 0.25s ease-out;
 }
 
@@ -135,7 +126,6 @@ dialog.hh-dialog::backdrop {
   }
 }
 
-/* nicer inputs */
 input[type="datetime-local"],
 input[type="date"],
 input[type="email"],

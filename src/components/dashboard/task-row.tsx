@@ -19,32 +19,34 @@ export type SectionKind = "overdue" | "week" | "later";
 
 const sectionStyles: Record<
   SectionKind,
-  { bar: string; hoverBorder: string; hoverGlow: string }
+  {
+    bar: string;
+    barGlow: string;
+    hoverBorder: string;
+    hoverGlow: string;
+  }
 > = {
   overdue: {
     bar: "border-l-rose-500",
-    hoverBorder: "hover:border-rose-400/40",
-    hoverGlow: "hover:shadow-[0_8px_30px_-8px_rgba(244,63,94,0.35)]",
+    barGlow: "shadow-[-4px_0_12px_-2px_rgba(244,63,94,0.4)]",
+    hoverBorder: "hover:border-rose-400/30",
+    hoverGlow:
+      "hover:shadow-[0_12px_40px_-10px_rgba(244,63,94,0.2),-4px_0_16px_-2px_rgba(244,63,94,0.45)]",
   },
   week: {
     bar: "border-l-amber-500",
-    hoverBorder: "hover:border-amber-400/40",
-    hoverGlow: "hover:shadow-[0_8px_30px_-8px_rgba(245,158,11,0.3)]",
+    barGlow: "shadow-[-4px_0_12px_-2px_rgba(245,158,11,0.35)]",
+    hoverBorder: "hover:border-amber-400/30",
+    hoverGlow:
+      "hover:shadow-[0_12px_40px_-10px_rgba(245,158,11,0.18),-4px_0_16px_-2px_rgba(245,158,11,0.4)]",
   },
   later: {
     bar: "border-l-blue-500",
-    hoverBorder: "hover:border-blue-400/40",
-    hoverGlow: "hover:shadow-[0_8px_30px_-8px_rgba(59,130,246,0.35)]",
+    barGlow: "shadow-[-4px_0_12px_-2px_rgba(59,130,246,0.4)]",
+    hoverBorder: "hover:border-blue-400/30",
+    hoverGlow:
+      "hover:shadow-[0_12px_40px_-10px_rgba(59,130,246,0.2),-4px_0_16px_-2px_rgba(59,130,246,0.45)]",
   },
-};
-
-const priorityMeta: Record<
-  DashboardTask["priority"],
-  { label: string; dot: string }
-> = {
-  HIGH: { label: "High", dot: "bg-rose-400" },
-  MEDIUM: { label: "Med", dot: "bg-amber-400" },
-  LOW: { label: "Low", dot: "bg-emerald-400" },
 };
 
 const statusLabels: Record<string, string> = {
@@ -53,18 +55,38 @@ const statusLabels: Record<string, string> = {
   DONE: "Done",
 };
 
-function Pill({
-  children,
-  dot,
-}: {
-  children: React.ReactNode;
-  dot?: string;
-}) {
+type PillTone = "cyan" | "amber" | "violet" | "slate" | "emerald" | "rose";
+
+const pillTones: Record<PillTone, string> = {
+  cyan: "border-cyan-400/15 bg-cyan-500/10 text-cyan-200/90",
+  amber: "border-amber-400/15 bg-amber-500/10 text-amber-100/90",
+  violet: "border-violet-400/15 bg-violet-500/10 text-violet-200/90",
+  slate: "border-white/[0.08] bg-white/[0.04] text-slate-300/90",
+  emerald: "border-emerald-400/15 bg-emerald-500/10 text-emerald-200/90",
+  rose: "border-rose-400/15 bg-rose-500/10 text-rose-200/90",
+};
+
+const pillDots: Record<PillTone, string> = {
+  cyan: "bg-cyan-400",
+  amber: "bg-amber-400",
+  violet: "bg-violet-400",
+  slate: "bg-slate-400",
+  emerald: "bg-emerald-400",
+  rose: "bg-rose-400",
+};
+
+function Pill({ children, tone }: { children: React.ReactNode; tone: PillTone }) {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.09] bg-white/[0.04] px-2 py-0.5 text-[0.65rem] font-medium leading-tight text-slate-300">
-      {dot ? (
-        <span className={cn("h-1.5 w-1.5 shrink-0 rounded-full", dot)} aria-hidden />
-      ) : null}
+    <span
+      className={cn(
+        "inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[0.65rem] font-medium leading-tight",
+        pillTones[tone],
+      )}
+    >
+      <span
+        className={cn("h-1.5 w-1.5 shrink-0 rounded-full", pillDots[tone])}
+        aria-hidden
+      />
       {children}
     </span>
   );
@@ -80,7 +102,17 @@ export function TaskRow({
   const router = useRouter();
   const [completing, setCompleting] = useState(false);
   const s = sectionStyles[section];
-  const prio = priorityMeta[task.priority];
+
+  const priorityTone: PillTone =
+    task.priority === "HIGH"
+      ? "rose"
+      : task.priority === "MEDIUM"
+        ? "amber"
+        : "emerald";
+
+  const categoryTone: PillTone = task.category === "long" ? "amber" : "cyan";
+  const statusTone: PillTone =
+    task.status === "IN_PROGRESS" ? "violet" : "slate";
 
   async function complete(e: React.MouseEvent) {
     e.preventDefault();
@@ -92,7 +124,6 @@ export function TaskRow({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: "DONE" }),
     });
-    // Deja respirar la micro-animación antes de refrescar la lista
     await Promise.all([patch, new Promise((r) => setTimeout(r, 550))]);
     router.refresh();
   }
@@ -100,14 +131,15 @@ export function TaskRow({
   return (
     <div
       className={cn(
-        "group/row relative flex items-stretch gap-3 rounded-xl border border-white/[0.08] border-l-2 bg-white/[0.035] p-3 backdrop-blur-md",
-        "shadow-sm shadow-black/25 transition-all duration-300 ease-out",
-        "hover:-translate-y-0.5 hover:bg-white/[0.06]",
+        "group/row relative flex items-stretch gap-3 rounded-xl border border-white/[0.08] border-l-4 bg-white/[0.04] p-3 backdrop-blur-[20px]",
+        "shadow-sm shadow-black/20 transition-all duration-300 ease-out",
+        "hover:scale-[1.01] hover:bg-white/[0.06]",
         s.bar,
+        s.barGlow,
         s.hoverBorder,
         s.hoverGlow,
         completing &&
-          "pointer-events-none -translate-x-3 scale-[0.98] opacity-0 duration-500",
+          "pointer-events-none scale-[0.98] opacity-0 duration-500",
       )}
     >
       <button
@@ -116,11 +148,11 @@ export function TaskRow({
         aria-label={`Completar ${task.title}`}
         onClick={complete}
         className={cn(
-          "inline-flex h-9 w-9 shrink-0 items-center justify-center self-center rounded-xl border-2 transition-all duration-200",
+          "inline-flex h-9 w-9 shrink-0 items-center justify-center self-center rounded-xl border transition-all duration-200",
           completing
-            ? "border-emerald-400/60 bg-emerald-500/20 text-emerald-300"
+            ? "border-emerald-400/50 bg-emerald-500/15 text-emerald-300"
             : cn(
-                "border-dashed border-white/20 text-slate-400 hover:border-emerald-400 hover:bg-emerald-500/15 hover:text-emerald-300",
+                "border-white/15 bg-white/[0.03] text-slate-500 hover:border-emerald-400/50 hover:bg-emerald-500/10 hover:text-emerald-300",
                 "sm:opacity-0 sm:group-hover/row:opacity-100 sm:focus-visible:opacity-100",
               ),
         )}
@@ -152,19 +184,29 @@ export function TaskRow({
         href={`/tasks/${task.id}`}
         className="min-w-0 flex-1 py-0.5 outline-offset-2 transition-colors"
       >
-        <span className="block font-semibold text-white">
+        <span className="block font-semibold text-white/95">
           {task.title}
           {task.subject ? (
-            <span className="font-medium text-slate-400"> · {task.subject}</span>
+            <span className="font-medium text-slate-500"> · {task.subject}</span>
           ) : null}
         </span>
-        <span className="mt-1.5 flex flex-wrap items-center gap-1.5 text-xs">
-          <span className="font-medium tabular-nums text-slate-500 transition-colors group-hover/row:text-slate-400">
+        <span className="mt-2 flex flex-wrap items-center gap-1.5 text-xs">
+          <span className="font-medium tabular-nums text-slate-500">
             {task.dueLabel}
           </span>
-          <Pill>{task.category === "long" ? "Long" : "Short"}</Pill>
-          <Pill>{statusLabels[task.status] ?? task.status.replace("_", " ")}</Pill>
-          <Pill dot={prio.dot}>{prio.label}</Pill>
+          <Pill tone={categoryTone}>
+            {task.category === "long" ? "Long" : "Short"}
+          </Pill>
+          <Pill tone={statusTone}>
+            {statusLabels[task.status] ?? task.status.replace("_", " ")}
+          </Pill>
+          <Pill tone={priorityTone}>
+            {task.priority === "HIGH"
+              ? "High"
+              : task.priority === "MEDIUM"
+                ? "Med"
+                : "Low"}
+          </Pill>
         </span>
       </Link>
     </div>

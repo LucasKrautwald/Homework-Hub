@@ -75,22 +75,22 @@ export function DashboardQuickAdd() {
       <button
         type="button"
         onClick={open}
-        className="inline-flex items-center justify-center gap-2 rounded-xl border border-cyan-400/40 bg-cyan-500/15 px-5 py-3 text-sm font-semibold text-cyan-100 shadow-sm shadow-cyan-950/30 transition hover:border-cyan-300/55 hover:bg-cyan-500/25 focus-visible:outline focus-visible:ring-2 focus-visible:ring-cyan-400/50"
+        className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.1] bg-white/[0.04] px-5 py-3 text-sm font-semibold text-slate-200 shadow-sm shadow-black/20 backdrop-blur-[20px] transition hover:border-violet-400/30 hover:bg-white/[0.06] hover:text-white focus-visible:outline focus-visible:ring-2 focus-visible:ring-violet-400/30"
       >
-        <Zap className="h-4 w-4 text-cyan-300" />
+        <Zap className="h-4 w-4 text-violet-400" />
         Quick add
       </button>
 
       <dialog
         ref={dialogRef}
         aria-labelledby={titleId}
-        className="hh-dialog rounded-2xl border border-white/[0.12] bg-[#0d1126]/95 p-6 text-slate-200 shadow-2xl shadow-black/60 backdrop-blur-2xl"
+        className="hh-dialog rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 text-slate-200 shadow-[0_32px_64px_rgba(0,0,0,0.4)] backdrop-blur-[24px]"
         onClick={(ev) => {
           if (ev.target === dialogRef.current) close();
         }}
       >
         <form onSubmit={onSubmit} className="space-y-4">
-          <div className="flex items-center gap-2 text-cyan-300/90">
+          <div className="flex items-center gap-2 text-violet-400/90">
             <Zap className="h-4 w-4" />
             <span className="text-xs font-bold uppercase tracking-wider">
               Quick add
@@ -106,7 +106,7 @@ export function DashboardQuickAdd() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Ej. Ensayo de historia"
-              className="rounded-xl border border-white/10 bg-black/30 px-3 py-2.5 text-white outline-none ring-0 transition placeholder:text-slate-600 focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/25"
+              className="rounded-xl border border-white/10 bg-white/[0.05] px-3 py-2.5 text-white outline-none ring-0 transition placeholder:text-slate-600 focus:border-violet-400/60 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.15)]"
             />
           </label>
           <label className="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
@@ -116,7 +116,7 @@ export function DashboardQuickAdd() {
               required
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="rounded-xl border border-white/10 bg-black/30 px-3 py-2.5 text-white outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/25"
+              className="rounded-xl border border-white/10 bg-white/[0.05] px-3 py-2.5 text-white outline-none focus:border-violet-400/60 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.15)]"
             />
           </label>
           {error ? (
@@ -133,7 +133,7 @@ export function DashboardQuickAdd() {
             <button
               type="submit"
               disabled={pending}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-600 to-teal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-900/30 transition hover:from-cyan-500 hover:to-teal-500 disabled:opacity-60"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600/90 via-violet-500/90 to-violet-600/90 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-900/30 transition hover:from-violet-500 hover:via-violet-400/90 hover:to-violet-500 disabled:opacity-60"
             >
               {pending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />

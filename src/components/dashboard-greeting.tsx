@@ -35,12 +35,12 @@ export function DashboardGreeting({
   return (
     <div>
       <h1
-        className="bg-gradient-to-r from-violet-300 via-fuchsia-100 to-white bg-clip-text text-3xl font-extrabold tracking-tight text-transparent"
+        className="bg-gradient-to-br from-white via-slate-200 to-slate-400 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-5xl"
         aria-live="polite"
       >
         {line ?? (
           <span
-            className="invisible bg-gradient-to-r from-violet-300 via-fuchsia-100 to-white bg-clip-text"
+            className="invisible bg-gradient-to-br from-white to-slate-300 bg-clip-text"
             aria-hidden
           >
             Buenos días
@@ -50,8 +50,8 @@ export function DashboardGreeting({
       <p
         className={
           updatedAt
-            ? "mt-1.5 inline-flex items-center gap-1.5 text-xs font-medium text-slate-500"
-            : "invisible mt-1.5 text-xs"
+            ? "mt-2 inline-flex items-center gap-1.5 text-xs text-slate-400 opacity-40"
+            : "invisible mt-2 text-xs"
         }
       >
         <Clock className="h-3 w-3" aria-hidden />

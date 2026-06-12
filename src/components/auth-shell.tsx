@@ -3,25 +3,25 @@ import { GraduationCap } from "lucide-react";
 export function AuthShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative flex min-h-full flex-col items-center justify-center px-4 py-12">
-      <div
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-        aria-hidden
-      >
-        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-fuchsia-400/30 blur-3xl dark:bg-fuchsia-600/20" />
-        <div className="absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-cyan-400/25 blur-3xl dark:bg-cyan-600/15" />
-        <div className="absolute left-1/2 top-1/3 h-48 w-48 -translate-x-1/2 rounded-full bg-violet-400/20 blur-3xl dark:bg-violet-600/15" />
-      </div>
-
       <div className="relative w-full max-w-md">
-        <div className="mb-8 flex flex-col items-center text-center">
-          <span className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600 to-fuchsia-500 text-white shadow-xl shadow-violet-500/30">
-            <GraduationCap className="h-8 w-8" strokeWidth={2} />
-          </span>
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-violet-600 dark:text-violet-400">
+        <div className="mb-10 flex flex-col items-center text-center">
+          <div className="relative">
+            <span
+              className="pointer-events-none absolute inset-x-2 -bottom-3 h-8 rounded-full bg-violet-500/30 blur-xl"
+              aria-hidden
+            />
+            <span className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600/90 to-violet-800/90 text-white shadow-lg shadow-violet-900/40">
+              <GraduationCap className="h-7 w-7" strokeWidth={1.75} />
+            </span>
+          </div>
+          <p className="mt-5 text-[0.7rem] font-light uppercase tracking-[0.35em] text-slate-400">
             Homework Hub
           </p>
         </div>
-        <div className="rounded-3xl border border-white/60 bg-white/85 p-8 shadow-2xl shadow-violet-500/15 backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/80">
+
+        <div
+          className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 shadow-[0_32px_64px_rgba(0,0,0,0.4)] backdrop-blur-[24px]"
+        >
           {children}
         </div>
       </div>

@@ -24,20 +24,24 @@ export function AppNav() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200/90 bg-white/92 shadow-sm shadow-slate-900/5 backdrop-blur-xl dark:border-b dark:border-violet-500/12 dark:bg-[#0e0c16]/96 dark:shadow-[inset_0_-1px_0_0_rgba(255,255,255,0.04)]">
+    <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[rgba(10,10,15,0.8)] backdrop-blur-xl">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
         <Link
           href="/dashboard"
-          className="group flex items-center gap-2 rounded-xl px-1 py-0.5 transition hover:opacity-90"
+          className="group flex items-center gap-2.5 rounded-xl px-1 py-0.5 transition hover:opacity-90"
         >
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-500 text-white shadow-lg shadow-violet-500/30">
-            <GraduationCap className="h-5 w-5" strokeWidth={2.2} />
+          <span className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600/90 to-violet-800/90 text-white shadow-md shadow-violet-900/30">
+            <span
+              className="pointer-events-none absolute inset-x-1 -bottom-1.5 h-4 rounded-full bg-violet-500/25 blur-md"
+              aria-hidden
+            />
+            <GraduationCap className="relative h-5 w-5" strokeWidth={1.75} />
           </span>
           <span className="min-w-0">
-            <span className="block truncate bg-gradient-to-r from-violet-700 to-fuchsia-600 bg-clip-text text-sm font-bold tracking-tight text-transparent dark:from-violet-300 dark:to-fuchsia-400">
+            <span className="block truncate text-sm font-light uppercase tracking-[0.2em] text-slate-300">
               Homework Hub
             </span>
-            <span className="block text-[0.65rem] font-medium uppercase tracking-wider text-violet-500/80 dark:text-violet-400/80">
+            <span className="block text-[0.65rem] font-medium text-slate-500">
               Stay on track
             </span>
           </span>
@@ -55,22 +59,22 @@ export function AppNav() {
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "relative inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition-colors",
+                  "relative inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium transition-all duration-200",
                   active
-                    ? "bg-violet-100 font-bold text-violet-900 ring-1 ring-inset ring-violet-300 dark:bg-gradient-to-r dark:from-violet-600/25 dark:to-fuchsia-600/20 dark:text-white dark:ring-violet-400/30"
-                    : "text-slate-600 hover:bg-violet-50 hover:text-violet-800 dark:text-slate-400 dark:hover:bg-white/[0.05] dark:hover:text-violet-100",
+                    ? "bg-white/[0.08] text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1),0_0_20px_-4px_rgba(139,92,246,0.35)]"
+                    : "text-slate-400 hover:bg-white/[0.04] hover:text-slate-200",
                 )}
               >
                 <Icon
                   className={cn(
                     "h-4 w-4 shrink-0",
-                    active ? "opacity-100" : "opacity-80",
+                    active ? "text-violet-300" : "opacity-70",
                   )}
                 />
                 <span className="hidden sm:inline">{label}</span>
                 {active ? (
                   <span
-                    className="absolute inset-x-3 -bottom-[5px] h-0.5 rounded-full bg-gradient-to-r from-violet-400 to-fuchsia-400"
+                    className="absolute inset-x-2 -bottom-[9px] h-[2px] rounded-full bg-gradient-to-r from-violet-400/80 via-fuchsia-400/60 to-violet-400/80"
                     aria-hidden
                   />
                 ) : null}
@@ -79,7 +83,7 @@ export function AppNav() {
           })}
           <button
             type="button"
-            className="ml-1 inline-flex items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-700 transition hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-950/40 dark:text-rose-300 dark:hover:border-rose-400/50 dark:hover:bg-rose-950/70"
+            className="ml-1 inline-flex items-center gap-1.5 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2 text-sm font-medium text-slate-400 transition hover:border-rose-500/25 hover:bg-rose-500/10 hover:text-rose-300"
             onClick={() => signOut({ callbackUrl: "/login" })}
           >
             <LogOut className="h-4 w-4" />

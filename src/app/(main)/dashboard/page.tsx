@@ -68,37 +68,9 @@ export default async function DashboardPage() {
     ));
 
   return (
-    <div className="relative isolate -mx-4 min-h-[calc(100vh-6rem)] overflow-hidden px-4 pb-10 text-slate-100 sm:-mx-6 sm:px-6">
-      {/* Base: negro -> slate-900 -> blue-950 */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-20 bg-[linear-gradient(170deg,#020308_0%,#0f172a_55%,#121a3c_115%)]"
-        aria-hidden
-      />
-      {/* Mesh gradient sutil */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-10"
-        aria-hidden
-        style={{
-          background: `
-            radial-gradient(ellipse 70% 55% at 8% -5%, rgba(124, 58, 237, 0.2), transparent 55%),
-            radial-gradient(ellipse 60% 50% at 100% 0%, rgba(34, 211, 238, 0.1), transparent 50%),
-            radial-gradient(ellipse 65% 55% at 95% 100%, rgba(59, 130, 246, 0.14), transparent 52%),
-            radial-gradient(ellipse 40% 35% at 0% 100%, rgba(167, 139, 250, 0.1), transparent 45%)
-          `,
-        }}
-      />
-      {/* Noise */}
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.025]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-          backgroundSize: "200px",
-        }}
-        aria-hidden
-      />
-
-      <div className="relative z-0 space-y-8 pt-1">
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+    <div className="relative -mx-4 min-h-[calc(100vh-6rem)] px-4 pb-12 text-slate-100 sm:-mx-6 sm:px-6">
+      <div className="space-y-10 pt-2">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <DashboardGreeting
             displayName={
               session.user.name ?? session.user.email?.split("@")[0] ?? null
@@ -108,7 +80,7 @@ export default async function DashboardPage() {
             <DashboardQuickAdd />
             <Link
               href="/tasks/new"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-900/40 transition hover:from-violet-500 hover:to-fuchsia-500 hover:shadow-violet-700/40 focus-visible:outline focus-visible:ring-2 focus-visible:ring-violet-400/60"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-violet-500/20 bg-gradient-to-r from-violet-600/80 via-violet-500/80 to-violet-600/80 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-900/25 transition hover:from-violet-500/90 hover:via-violet-400/80 hover:to-violet-500/90 hover:shadow-violet-800/30 focus-visible:outline focus-visible:ring-2 focus-visible:ring-violet-400/40"
             >
               <Plus className="h-5 w-5" />
               Nueva tarea
@@ -145,8 +117,8 @@ export default async function DashboardPage() {
           title="Vencidas"
           count={overdue.length}
           accent="rose"
-          emptyTitle="Al día: no hay tareas vencidas."
-          emptyBody="Sigue así, lo tienes bajo control."
+          emptyTitle="Todo al día."
+          emptyBody="No tienes tareas vencidas. Mantén el ritmo — cada entrega cuenta."
         >
           {renderRows(overdue, "overdue")}
         </TaskSection>
@@ -162,9 +134,9 @@ export default async function DashboardPage() {
               Nada pendiente hasta el domingo.{" "}
               <Link
                 href="/calendar"
-                className="font-semibold text-cyan-400 underline decoration-cyan-500/40 underline-offset-2 transition hover:text-cyan-300"
+                className="font-medium text-violet-400/90 transition hover:text-violet-300"
               >
-                Ver calendario
+                Ver calendario →
               </Link>
             </>
           }
@@ -180,14 +152,13 @@ export default async function DashboardPage() {
           emptyTitle="Horizonte limpio."
           emptyBody={
             <>
-              No hay entregas después de esta semana. Añade fechas en{" "}
+              Sin entregas después de esta semana. Planifica con{" "}
               <Link
                 href="/tasks/new"
-                className="font-semibold text-cyan-400 underline decoration-cyan-500/40 underline-offset-2 transition hover:text-cyan-300"
+                className="font-medium text-violet-400/90 transition hover:text-violet-300"
               >
-                nueva tarea
+                nueva tarea →
               </Link>
-              .
             </>
           }
         >
