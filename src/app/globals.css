@@ -18,10 +18,14 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #030305;
-    --foreground: #f1f5f9;
-    --card: rgba(15, 23, 42, 0.75);
+    --background: #060913;
+    --foreground: #e8eefc;
+    --card: rgba(15, 23, 42, 0.62);
   }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -38,9 +42,10 @@ body {
 @media (prefers-color-scheme: dark) {
   body {
     background-image:
-      radial-gradient(ellipse 50% 40% at 92% 0%, rgba(6, 182, 212, 0.18), transparent),
-      radial-gradient(ellipse 35% 25% at 0% 50%, rgba(8, 145, 178, 0.1), transparent),
-      radial-gradient(ellipse 30% 45% at 55% 100%, rgba(20, 184, 166, 0.07), transparent);
+      linear-gradient(180deg, #030409 0%, #0f172a 60%, #131c3a 100%),
+      radial-gradient(ellipse 62% 48% at 92% 0%, rgba(99, 102, 241, 0.16), transparent),
+      radial-gradient(ellipse 45% 35% at 0% 50%, rgba(56, 189, 248, 0.1), transparent);
+    background-blend-mode: normal, screen, screen;
   }
 }
 
@@ -55,8 +60,79 @@ dialog.hh-dialog {
   transform: translate(-50%, -50%);
 }
 
+dialog.hh-dialog[open] {
+  animation: hh-dialog-up 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 dialog.hh-dialog::backdrop {
-  background: rgb(0 0 0 / 0.55);
+  background: rgb(2 6 23 / 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: hh-fade 0.25s ease-out;
+}
+
+@keyframes hh-dialog-up {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 28px)) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes hh-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hh-pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes hh-check-draw {
+  from {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes hh-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  dialog.hh-dialog[open],
+  dialog.hh-dialog::backdrop {
+    animation: none;
+  }
 }
 
 /* nicer inputs */

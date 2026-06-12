@@ -53,25 +53,37 @@ export function AppNav() {
               <Link
                 key={href}
                 href={href}
+                aria-current={active ? "page" : undefined}
                 className={cn(
-                  "inline-flex items-center gap-1.5 rounded-lg border-b-2 border-transparent px-3 py-2 text-sm font-semibold transition-colors",
+                  "relative inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold transition-colors",
                   active
-                    ? "border-violet-700 font-bold text-slate-950 dark:border-cyan-300 dark:text-white"
-                    : "text-slate-600 hover:border-violet-300/50 hover:text-violet-800 dark:text-slate-400 dark:hover:border-white/10 dark:hover:text-violet-100",
+                    ? "bg-violet-100 font-bold text-violet-900 ring-1 ring-inset ring-violet-300 dark:bg-gradient-to-r dark:from-violet-600/25 dark:to-fuchsia-600/20 dark:text-white dark:ring-violet-400/30"
+                    : "text-slate-600 hover:bg-violet-50 hover:text-violet-800 dark:text-slate-400 dark:hover:bg-white/[0.05] dark:hover:text-violet-100",
                 )}
               >
-                <Icon className="h-4 w-4 shrink-0 opacity-90" />
+                <Icon
+                  className={cn(
+                    "h-4 w-4 shrink-0",
+                    active ? "opacity-100" : "opacity-80",
+                  )}
+                />
                 <span className="hidden sm:inline">{label}</span>
+                {active ? (
+                  <span
+                    className="absolute inset-x-3 -bottom-[5px] h-0.5 rounded-full bg-gradient-to-r from-violet-400 to-fuchsia-400"
+                    aria-hidden
+                  />
+                ) : null}
               </Link>
             );
           })}
           <button
             type="button"
-            className="ml-1 inline-flex items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-700 transition hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-950/40 dark:text-rose-300 dark:hover:bg-rose-950/70"
+            className="ml-1 inline-flex items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-700 transition hover:bg-rose-100 dark:border-rose-500/30 dark:bg-rose-950/40 dark:text-rose-300 dark:hover:border-rose-400/50 dark:hover:bg-rose-950/70"
             onClick={() => signOut({ callbackUrl: "/login" })}
           >
             <LogOut className="h-4 w-4" />
-            <span className="hidden sm:inline">Out</span>
+            <span className="hidden sm:inline">Sign out</span>
           </button>
         </nav>
       </div>

@@ -84,7 +84,7 @@ export function DashboardQuickAdd() {
       <dialog
         ref={dialogRef}
         aria-labelledby={titleId}
-        className="hh-dialog rounded-2xl border border-white/15 bg-[#1a1629] p-6 text-slate-200 shadow-2xl shadow-black/50"
+        className="hh-dialog rounded-2xl border border-white/[0.12] bg-[#0d1126]/95 p-6 text-slate-200 shadow-2xl shadow-black/60 backdrop-blur-2xl"
         onClick={(ev) => {
           if (ev.target === dialogRef.current) close();
         }}
@@ -106,7 +106,7 @@ export function DashboardQuickAdd() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Ej. Ensayo de historia"
-              className="rounded-xl border border-white/10 bg-[#0d0c15] px-3 py-2.5 text-white outline-none ring-0 transition placeholder:text-slate-600 focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/25"
+              className="rounded-xl border border-white/10 bg-black/30 px-3 py-2.5 text-white outline-none ring-0 transition placeholder:text-slate-600 focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/25"
             />
           </label>
           <label className="flex flex-col gap-1.5 text-sm font-semibold text-slate-300">
@@ -116,7 +116,7 @@ export function DashboardQuickAdd() {
               required
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              className="rounded-xl border border-white/10 bg-[#0d0c15] px-3 py-2.5 text-white outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/25"
+              className="rounded-xl border border-white/10 bg-black/30 px-3 py-2.5 text-white outline-none focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/25"
             />
           </label>
           {error ? (
