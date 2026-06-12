@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { Plus } from "lucide-react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { HomeworkCompletedSection } from "@/components/tasks/homework-completed-section";
 import { HomeworkFilters } from "@/components/tasks/homework-filters";
 import {
   HomeworkKanbanCard,
@@ -45,8 +46,11 @@ export default async function TasksPage({ searchParams }: Props) {
     orderBy: { dueAt: "asc" },
   });
 
+  const pendingTasks = allTasks.filter((t) => t.status !== "DONE");
+  const completedTasks = allTasks.filter((t) => t.status === "DONE");
+
   const tasks = await prisma.task.findMany({
-    where: { userId: session.user.id, ...categoryWhere },
+    where: { userId: session.user.id, status: { not: "DONE" }, ...categoryWhere },
     orderBy: { dueAt: "asc" },
   });
 
@@ -56,9 +60,6 @@ export default async function TasksPage({ searchParams }: Props) {
     const okQuery = !query || hay.includes(query);
     return okPriority && okQuery;
   });
-
-  const pendingCount = allTasks.filter((t) => t.status !== "DONE").length;
-  const completedCount = allTasks.filter((t) => t.status === "DONE").length;
 
   const serialized: HomeworkTask[] = filteredTasks.map((t) => ({
     id: t.id,
@@ -70,6 +71,20 @@ export default async function TasksPage({ searchParams }: Props) {
     priority: t.priority,
   }));
 
+  const completedSerialized = completedTasks
+    .sort(
+      (a, b) =>
+        new Date(b.completedAt ?? b.updatedAt).getTime() -
+        new Date(a.completedAt ?? a.updatedAt).getTime(),
+    )
+    .map((t) => ({
+      id: t.id,
+      title: t.title,
+      subject: t.subject,
+      completedAt: t.completedAt?.toISOString() ?? null,
+      updatedAt: t.updatedAt.toISOString(),
+    }));
+
   return (
     <div className="space-y-8">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -78,7 +93,8 @@ export default async function TasksPage({ searchParams }: Props) {
             All homework
           </h1>
           <p className="mt-2 text-sm text-slate-400">
-            {pendingCount} tareas pendientes · {completedCount} completadas
+            {pendingTasks.length} tareas pendientes · {completedTasks.length}{" "}
+            completadas
           </p>
         </div>
         <Link
@@ -101,10 +117,10 @@ export default async function TasksPage({ searchParams }: Props) {
       {serialized.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-white/[0.1] bg-white/[0.03] px-6 py-14 text-center backdrop-blur-[20px]">
           <p className="text-base font-semibold text-slate-200">
-            No hay tareas aquí todavía
+            No hay tareas pendientes aquí
           </p>
           <p className="mt-2 text-sm text-slate-500">
-            Crea tu primera asignación y empieza a organizarte.{" "}
+            Crea una nueva o revisa las completadas abajo.{" "}
             <Link
               href="/tasks/new"
               className="font-medium text-violet-400 transition hover:text-violet-300"
@@ -120,6 +136,8 @@ export default async function TasksPage({ searchParams }: Props) {
           ))}
         </div>
       )}
+
+      <HomeworkCompletedSection tasks={completedSerialized} />
     </div>
   );
 }

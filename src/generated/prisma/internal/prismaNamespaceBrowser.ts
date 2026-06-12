@@ -94,6 +94,8 @@ export const TaskScalarFieldEnum = {
   status: 'status',
   priority: 'priority',
   googleUrl: 'googleUrl',
+  reflection: 'reflection',
+  completedAt: 'completedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

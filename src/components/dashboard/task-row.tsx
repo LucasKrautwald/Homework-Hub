@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/cn";
+import { useTaskCompletion } from "@/components/task-completion/task-completion-provider";
 
 export type DashboardTask = {
   id: string;
@@ -99,7 +99,7 @@ export function TaskRow({
   task: DashboardTask;
   section: SectionKind;
 }) {
-  const router = useRouter();
+  const { completeTask } = useTaskCompletion();
   const [completing, setCompleting] = useState(false);
   const s = sectionStyles[section];
 
@@ -119,13 +119,13 @@ export function TaskRow({
     e.stopPropagation();
     if (completing) return;
     setCompleting(true);
-    const patch = fetch(`/api/tasks/${task.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: "DONE" }),
+    await new Promise((r) => setTimeout(r, 400));
+    await completeTask({
+      id: task.id,
+      title: task.title,
+      subject: task.subject,
+      category: task.category,
     });
-    await Promise.all([patch, new Promise((r) => setTimeout(r, 550))]);
-    router.refresh();
   }
 
   return (

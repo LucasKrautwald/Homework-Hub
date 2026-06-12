@@ -72,6 +72,54 @@ dialog.hh-dialog::backdrop {
   animation: hh-fade 0.25s ease-out;
 }
 
+dialog.hh-reflection-dialog {
+  position: fixed;
+  top: auto;
+  bottom: 0;
+  left: 50%;
+  margin: 0;
+  max-height: min(90vh, calc(100vh - 2rem));
+  width: min(100vw, 32rem);
+  overflow: auto;
+  transform: translateX(-50%);
+  border-radius: 1rem 1rem 0 0;
+}
+
+dialog.hh-reflection-dialog[open] {
+  animation: hh-sheet-up 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 640px) {
+  dialog.hh-reflection-dialog {
+    top: 50%;
+    bottom: auto;
+    width: min(100vw - 2rem, 28rem);
+    border-radius: 1rem;
+    transform: translate(-50%, -50%);
+  }
+  dialog.hh-reflection-dialog[open] {
+    animation: hh-dialog-up 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+dialog.hh-reflection-dialog::backdrop {
+  background: rgb(10 10 15 / 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: hh-fade 0.25s ease-out;
+}
+
+@keyframes hh-sheet-up {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
 @keyframes hh-dialog-up {
   from {
     opacity: 0;

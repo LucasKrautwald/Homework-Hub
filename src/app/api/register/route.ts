@@ -6,7 +6,10 @@ import { prisma } from "@/lib/prisma";
 const bodySchema = z.object({
   email: z.string().email(),
   password: z.string().min(8, "Use at least 8 characters"),
-  name: z.string().optional(),
+  name: z
+    .string()
+    .trim()
+    .min(1, "El nombre es requerido"),
 });
 
 export async function POST(req: Request) {
@@ -14,6 +17,10 @@ export async function POST(req: Request) {
     const json = await req.json();
     const parsed = bodySchema.safeParse(json);
     if (!parsed.success) {
+      const nameErr = parsed.error.flatten().fieldErrors.name?.[0];
+      if (nameErr) {
+        return NextResponse.json({ error: nameErr }, { status: 400 });
+      }
       return NextResponse.json(
         { error: parsed.error.flatten().fieldErrors },
         { status: 400 },
@@ -31,7 +38,7 @@ export async function POST(req: Request) {
 
     const passwordHash = await bcrypt.hash(password, 12);
     await prisma.user.create({
-      data: { email, passwordHash, name: name?.trim() || null },
+      data: { email, passwordHash, name: name.trim() },
     });
 
     return NextResponse.json({ ok: true });

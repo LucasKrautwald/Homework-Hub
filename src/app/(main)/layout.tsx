@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { AppNav } from "@/components/app-nav";
+import { TaskCompletionProvider } from "@/components/task-completion/task-completion-provider";
 
 export default async function MainLayout({
   children,
@@ -13,11 +14,11 @@ export default async function MainLayout({
   }
 
   return (
-    <>
+    <TaskCompletionProvider>
       <AppNav />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 pb-16 sm:px-6">
         {children}
       </main>
-    </>
+    </TaskCompletionProvider>
   );
 }

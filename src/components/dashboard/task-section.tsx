@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { ChevronDown, Sparkles } from "lucide-react";
 import { cn } from "@/lib/cn";
 
@@ -42,6 +42,8 @@ export function TaskSection({
   accent,
   emptyTitle,
   emptyBody,
+  defaultOpen = false,
+  storageKey,
   children,
 }: {
   id: string;
@@ -50,17 +52,52 @@ export function TaskSection({
   accent: Accent;
   emptyTitle: string;
   emptyBody?: ReactNode;
+  defaultOpen?: boolean;
+  storageKey: string;
   children: ReactNode;
 }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(defaultOpen);
+  const [ready, setReady] = useState(false);
   const a = accents[accent];
   const panelId = `${id}-panel`;
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored !== null) {
+        setOpen(stored === "true");
+      }
+    } catch {
+      /* ignore */
+    }
+    setReady(true);
+  }, [storageKey]);
+
+  function toggle() {
+    setOpen((v) => {
+      const next = !v;
+      try {
+        localStorage.setItem(storageKey, String(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  }
+
+  if (!ready) {
+    return (
+      <section id={id} className="scroll-mt-24">
+        <div className="h-10 animate-pulse rounded-lg bg-white/[0.04]" />
+      </section>
+    );
+  }
 
   return (
     <section id={id} className="scroll-mt-24 space-y-4">
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={toggle}
         aria-expanded={open}
         aria-controls={panelId}
         className="group flex w-full items-center gap-3 rounded-lg px-1 py-1 text-left transition-colors hover:bg-white/[0.02]"

@@ -11,6 +11,7 @@ const patchSchema = z.object({
   status: z.enum(["TODO", "IN_PROGRESS", "DONE"]).optional(),
   priority: z.enum(["LOW", "MEDIUM", "HIGH"]).optional(),
   googleUrl: z.string().url().optional().nullable().or(z.literal("")),
+  reflection: z.string().max(5000).optional().nullable(),
 });
 
 type RouteContext = { params: Promise<{ id: string }> };
@@ -55,6 +56,15 @@ export async function PATCH(req: Request, context: RouteContext) {
   }
 
   const data = parsed.data;
+  const statusUpdate =
+    data.status !== undefined
+      ? {
+          status: data.status,
+          ...(data.status === "DONE" && { completedAt: new Date() }),
+          ...(data.status === "TODO" && { completedAt: null }),
+        }
+      : {};
+
   const task = await prisma.task.update({
     where: { id },
     data: {
@@ -63,10 +73,13 @@ export async function PATCH(req: Request, context: RouteContext) {
       ...(data.notes !== undefined && { notes: data.notes?.trim() || null }),
       ...(data.dueAt !== undefined && { dueAt: new Date(data.dueAt) }),
       ...(data.category !== undefined && { category: data.category }),
-      ...(data.status !== undefined && { status: data.status }),
+      ...statusUpdate,
       ...(data.priority !== undefined && { priority: data.priority }),
       ...(data.googleUrl !== undefined && {
         googleUrl: data.googleUrl?.trim() || null,
+      }),
+      ...(data.reflection !== undefined && {
+        reflection: data.reflection?.trim() || null,
       }),
     },
   });

@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CalendarDays, Check } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { useTaskCompletion } from "@/components/task-completion/task-completion-provider";
 
 export type HomeworkTask = {
   id: string;
@@ -67,7 +67,7 @@ export function HomeworkKanbanCard({
   task: HomeworkTask;
   index: number;
 }) {
-  const router = useRouter();
+  const { completeTask } = useTaskCompletion();
   const [exiting, setExiting] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [pending, setPending] = useState(false);
@@ -97,15 +97,15 @@ export function HomeworkKanbanCard({
     if (pending || done) return;
     setPending(true);
     setShowConfetti(true);
-    const patch = fetch(`/api/tasks/${task.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: "DONE" }),
+    await new Promise((r) => setTimeout(r, 350));
+    await completeTask({
+      id: task.id,
+      title: task.title,
+      subject: task.subject,
+      category: task.category,
     });
-    await Promise.all([patch, new Promise((r) => setTimeout(r, 650))]);
     setExiting(true);
-    await new Promise((r) => setTimeout(r, 400));
-    router.refresh();
+    setPending(false);
   }
 
   const dueFormatted = new Intl.DateTimeFormat("es", {
