@@ -105,7 +105,6 @@ export default async function DashboardPage() {
           <DashboardGreeting displayName={displayName} />
           <div className="flex flex-wrap items-center gap-3">
             <DashboardQuickAdd />
-            <AiPrioritizeButton tasks={prioritizeTasks} />
             <Link
               href="/tasks/new"
               className="inline-flex items-center justify-center gap-2 rounded-xl border border-violet-500/20 bg-gradient-to-r from-violet-600/80 via-violet-500/80 to-violet-600/80 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-900/25 transition hover:from-violet-500/90 hover:via-violet-400/80 hover:to-violet-500/90 hover:shadow-violet-800/30 focus-visible:outline focus-visible:ring-2 focus-visible:ring-violet-400/40"
@@ -113,6 +112,7 @@ export default async function DashboardPage() {
               <Plus className="h-5 w-5" />
               Nueva tarea
             </Link>
+            <AiPrioritizeButton tasks={prioritizeTasks} />
           </div>
         </div>
 
