@@ -20,24 +20,34 @@
 
 html {
   scroll-behavior: smooth;
+  min-height: 100%;
+  background-color: #0d0d14;
+  background-image:
+    radial-gradient(
+      circle 600px at 100% 0%,
+      rgba(124, 58, 237, 0.06),
+      transparent 70%
+    ),
+    radial-gradient(
+      circle 500px at 0% 100%,
+      rgba(59, 130, 246, 0.04),
+      transparent 70%
+    ),
+    linear-gradient(
+      135deg,
+      #0d0d14 0%,
+      #0f0f1a 30%,
+      #111128 60%,
+      #0d0d14 100%
+    );
+  background-attachment: fixed;
 }
 
 body {
   color: var(--foreground);
   font-family: var(--font-sans);
   min-height: 100vh;
-  background-color: #0a0a0f;
-  background-image:
-    radial-gradient(
-      ellipse 900px 700px at 100% 0%,
-      rgba(139, 92, 246, 0.15),
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 900px 700px at 0% 100%,
-      rgba(59, 130, 246, 0.1),
-      transparent 70%
-    );
+  background: transparent;
 }
 
 dialog.hh-dialog {
@@ -108,11 +118,33 @@ dialog.hh-dialog::backdrop {
 @keyframes hh-rise {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes hh-card-exit {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.92) translateY(12px);
+  }
+}
+
+@keyframes hh-confetti-fall {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) rotate(var(--rot));
   }
 }
 

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Bot, Loader2, Send, Sparkles, User } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
 
 type Msg = { role: "user" | "assistant"; content: string };
@@ -55,35 +54,41 @@ export function AiChat() {
   }
 
   return (
-    <div className="overflow-hidden rounded-3xl border border-violet-200/50 bg-white/90 shadow-2xl shadow-violet-500/15 dark:border-violet-500/20 dark:bg-slate-900/80">
-      <div className="border-b border-violet-100 bg-gradient-to-r from-violet-600/10 via-fuchsia-600/10 to-cyan-500/10 px-4 py-3 dark:border-violet-500/20">
-        <p className="text-xs font-bold uppercase tracking-widest text-violet-600 dark:text-violet-400">
+    <div className="flex min-h-[70vh] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] shadow-[0_32px_64px_rgba(0,0,0,0.35)] backdrop-blur-[24px]">
+      <div className="border-b border-white/[0.06] px-5 py-5 sm:px-6">
+        <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
           Quick prompts
         </p>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
           {QUICK_PROMPTS.map((q) => (
             <button
               key={q}
               type="button"
               onClick={() => void send(q)}
               disabled={pending}
-              className="rounded-full bg-white/90 px-3 py-1.5 text-left text-xs font-semibold text-violet-800 shadow-sm ring-1 ring-violet-200/80 transition hover:bg-violet-50 disabled:opacity-50 dark:bg-slate-950/60 dark:text-violet-200 dark:ring-violet-500/30 dark:hover:bg-violet-950/80"
+              className="flex items-start gap-2 rounded-xl border border-white/[0.08] bg-white/[0.04] p-3.5 text-left text-sm font-medium text-slate-300 transition hover:border-violet-400/25 hover:bg-violet-500/10 hover:text-white disabled:opacity-50"
             >
-              <Sparkles className="mr-1 inline h-3 w-3 text-fuchsia-500" />
+              <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-violet-400" />
               {q}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="max-h-[28rem] min-h-[14rem] space-y-4 overflow-y-auto p-4">
+      <div className="min-h-0 flex-1 space-y-5 overflow-y-auto p-5 sm:p-6">
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center gap-2 py-8 text-center">
-            <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white shadow-lg">
-              <Bot className="h-8 w-8" />
-            </span>
-            <p className="max-w-sm text-sm font-medium text-slate-600 dark:text-slate-400">
-              Ask anything school-related — or tap a quick prompt above.
+          <div className="flex h-full min-h-[20rem] flex-col items-center justify-center gap-4 py-8 text-center">
+            <div className="relative">
+              <span
+                className="pointer-events-none absolute inset-x-2 -bottom-3 h-10 rounded-full bg-violet-500/30 blur-xl"
+                aria-hidden
+              />
+              <span className="relative flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-600/90 to-violet-800/90 text-white shadow-lg shadow-violet-900/40">
+                <Bot className="h-10 w-10" strokeWidth={1.5} />
+              </span>
+            </div>
+            <p className="max-w-md text-base text-slate-400">
+              Pregunta lo que quieras sobre el colegio — o elige un prompt de arriba.
             </p>
           </div>
         )}
@@ -97,24 +102,24 @@ export function AiChat() {
           >
             <span
               className={cn(
-                "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl",
+                "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl",
                 m.role === "user"
-                  ? "bg-gradient-to-br from-violet-500 to-fuchsia-500 text-white"
-                  : "bg-gradient-to-br from-cyan-500 to-teal-500 text-white",
+                  ? "bg-gradient-to-br from-violet-600/80 to-fuchsia-600/80 text-white"
+                  : "bg-gradient-to-br from-violet-600/90 to-violet-800/90 text-white shadow-md shadow-violet-900/30",
               )}
             >
               {m.role === "user" ? (
-                <User className="h-4 w-4" />
+                <User className="h-5 w-5" />
               ) : (
-                <Bot className="h-4 w-4" />
+                <Bot className="h-5 w-5" />
               )}
             </span>
             <div
               className={cn(
-                "max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-md",
+                "max-w-[85%] rounded-2xl px-5 py-3.5 text-[0.9375rem] leading-relaxed",
                 m.role === "user"
-                  ? "bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white"
-                  : "border border-violet-100 bg-white text-slate-800 dark:border-violet-500/20 dark:bg-slate-950 dark:text-slate-100",
+                  ? "bg-gradient-to-br from-violet-600/90 to-fuchsia-600/80 text-white shadow-md"
+                  : "border border-white/[0.08] bg-white/[0.05] text-slate-200",
               )}
             >
               <div className="whitespace-pre-wrap">{m.content}</div>
@@ -122,22 +127,22 @@ export function AiChat() {
           </div>
         ))}
         {pending && (
-          <p className="flex items-center gap-2 text-sm font-medium text-violet-600 dark:text-violet-400">
+          <p className="flex items-center gap-2 text-sm font-medium text-violet-400">
             <Loader2 className="h-4 w-4 animate-spin" />
             Thinking…
           </p>
         )}
       </div>
 
-      {error && (
-        <p className="border-t border-rose-100 bg-rose-50 px-4 py-2 text-sm font-medium text-rose-700 dark:border-rose-500/20 dark:bg-rose-950/40 dark:text-rose-300">
+      {error ? (
+        <p className="border-t border-rose-500/20 bg-rose-500/10 px-5 py-3 text-sm text-rose-300 sm:px-6">
           {error}
         </p>
-      )}
+      ) : null}
 
-      <div className="flex gap-2 border-t border-violet-100 bg-violet-50/50 p-3 dark:border-violet-500/20 dark:bg-slate-950/50">
+      <div className="flex gap-3 border-t border-white/[0.06] bg-white/[0.02] p-4 sm:p-5">
         <textarea
-          rows={2}
+          rows={3}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
@@ -147,17 +152,16 @@ export function AiChat() {
             }
           }}
           placeholder="Ask the assistant…"
-          className="min-h-[3rem] flex-1 resize-none rounded-xl border-2 border-violet-100 bg-white px-3 py-2 text-sm font-medium text-slate-900 outline-none transition focus:border-violet-400 dark:border-violet-500/30 dark:bg-slate-950 dark:text-white"
+          className="min-h-[4.5rem] flex-1 resize-none rounded-xl border border-white/[0.1] bg-white/[0.05] px-4 py-3 text-base text-white outline-none transition placeholder:text-slate-500 focus:border-violet-400/50 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.12)]"
         />
-        <Button
+        <button
           type="button"
-          variant="secondary"
           disabled={pending}
           onClick={() => void send()}
-          className="self-end"
+          className="inline-flex h-[4.5rem] w-14 shrink-0 items-center justify-center self-end rounded-xl border border-violet-500/25 bg-gradient-to-r from-violet-600/90 to-violet-500/90 text-white shadow-lg shadow-violet-900/25 transition hover:from-violet-500 hover:to-violet-400/90 disabled:opacity-50"
         >
-          <Send className="h-4 w-4" />
-        </Button>
+          <Send className="h-5 w-5" />
+        </button>
       </div>
     </div>
   );
