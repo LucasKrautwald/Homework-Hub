@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     );
   }
 
-  let body: { messages?: Msg[] };
+  let body: { messages?: Msg[]; taskContext?: string };
   try {
     body = await req.json();
   } catch {
@@ -31,6 +31,13 @@ export async function POST(req: Request) {
   if (!Array.isArray(messages) || messages.length === 0) {
     return NextResponse.json({ error: "messages required" }, { status: 400 });
   }
+
+  const taskContext =
+    typeof body.taskContext === "string" ? body.taskContext.trim() : "";
+
+  const systemContent = taskContext
+    ? `${taskContext}\n\nResponde en el mismo idioma que use el estudiante. Sé conciso, práctico y específico con sus tareas cuando aplique.`
+    : "You are a helpful school assistant inside Homework Hub. Help organize work, plan study time, and explain concepts. Be concise.";
 
   const res = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
@@ -43,8 +50,7 @@ export async function POST(req: Request) {
       messages: [
         {
           role: "system",
-          content:
-            "You are a helpful school assistant inside Homework Hub. Help organize work, plan study time, and explain concepts. Be concise.",
+          content: systemContent,
         },
         ...messages.map((m) => ({
           role: m.role === "assistant" ? "assistant" : "user",

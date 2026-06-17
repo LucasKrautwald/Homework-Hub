@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { ChevronDown, Loader2, Sparkles } from "lucide-react";
 import { askAssistant } from "@/lib/ask-assistant";
+import { stripMarkdown } from "@/lib/strip-markdown";
 import { cn } from "@/lib/cn";
 import { TypewriterText } from "@/components/task-completion/typewriter-text";
 
-const CACHE_KEY = "hh-weekly-summary";
+const CACHE_KEY = "hh-weekly-summary-v2";
 const CACHE_MS = 60 * 60 * 1000;
 
 type SummaryData = {
@@ -58,12 +59,22 @@ export function WeeklySummaryCard({ data }: { data: SummaryData }) {
               )
               .join("\n")
           : "(ninguna)";
-      const prompt = `El estudiante ${data.userName} tiene esta semana:
+      const prompt = `Habla DIRECTAMENTE al estudiante en segunda persona (tú, tu, tienes). Nunca uses su nombre ni tercera persona ("Lucas tiene"...).
+
+Datos de tu semana:
 - Tareas vencidas: ${data.overdueCount}
-- Vencen esta semana:\n${weekList}
+- Vencen esta semana:
+${weekList}
 - Completadas esta semana: ${data.completedThisWeek}
-Da un resumen motivador en 3 puntos cortos: estado actual, riesgo principal, y una recomendación concreta.`;
-      const text = await askAssistant(prompt);
+
+Escribe exactamente 3 líneas cortas y concretas:
+1. Tu estado actual (qué tienes encima ahora)
+2. Tu riesgo principal (lo más urgente)
+3. Una acción concreta para hoy o mañana
+
+Reglas: español, tono directo y personal (no frases genéricas de motivación), sin markdown, sin asteriscos, sin negritas, sin viñetas. Solo texto plano, una idea por línea.`;
+      const raw = await askAssistant(prompt);
+      const text = stripMarkdown(raw);
       setSummary(text);
       localStorage.setItem(key, JSON.stringify({ text, ts: Date.now() }));
     } catch (e) {

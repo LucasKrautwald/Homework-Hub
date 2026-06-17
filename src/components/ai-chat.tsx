@@ -1,10 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bot, Loader2, Send, Sparkles, User } from "lucide-react";
+import { formatPendingTasksContext } from "@/lib/format-task-context";
 import { cn } from "@/lib/cn";
 
 type Msg = { role: "user" | "assistant"; content: string };
+
+type ApiTask = {
+  title: string;
+  subject: string | null;
+  dueAt: string;
+  priority: string;
+  category: string;
+  status: string;
+};
 
 const QUICK_PROMPTS = [
   "Plan my study time for this week",
@@ -18,10 +28,36 @@ export function AiChat() {
   const [input, setInput] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [taskContext, setTaskContext] = useState<string | null>(null);
+  const [tasksLoading, setTasksLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadTasks() {
+      try {
+        const res = await fetch("/api/tasks");
+        if (!res.ok) throw new Error("No se pudieron cargar las tareas");
+        const tasks = (await res.json()) as ApiTask[];
+        if (!cancelled) {
+          setTaskContext(formatPendingTasksContext(tasks));
+        }
+      } catch {
+        if (!cancelled) {
+          setTaskContext(formatPendingTasksContext([]));
+        }
+      } finally {
+        if (!cancelled) setTasksLoading(false);
+      }
+    }
+    void loadTasks();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   async function send(text?: string) {
     const raw = (text ?? input).trim();
-    if (!raw || pending) return;
+    if (!raw || pending || tasksLoading || !taskContext) return;
     setInput("");
     setError(null);
     const next: Msg[] = [...messages, { role: "user", content: raw }];
@@ -35,6 +71,7 @@ export function AiChat() {
           role: m.role,
           content: m.content,
         })),
+        taskContext,
       }),
     });
     const data = await res.json().catch(() => ({}));
@@ -53,19 +90,29 @@ export function AiChat() {
     ]);
   }
 
+  const disabled = pending || tasksLoading;
+
   return (
     <div className="flex min-h-[70vh] flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] shadow-[0_32px_64px_rgba(0,0,0,0.35)] backdrop-blur-[24px]">
       <div className="border-b border-white/[0.06] px-5 py-5 sm:px-6">
-        <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
-          Quick prompts
-        </p>
+        <div className="flex items-center justify-between gap-2">
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
+            Quick prompts
+          </p>
+          {tasksLoading ? (
+            <span className="inline-flex items-center gap-1.5 text-xs text-slate-500">
+              <Loader2 className="h-3 w-3 animate-spin" />
+              Cargando tareas…
+            </span>
+          ) : null}
+        </div>
         <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
           {QUICK_PROMPTS.map((q) => (
             <button
               key={q}
               type="button"
               onClick={() => void send(q)}
-              disabled={pending}
+              disabled={disabled}
               className="flex items-start gap-2 rounded-xl border border-white/[0.08] bg-white/[0.04] p-3.5 text-left text-sm font-medium text-slate-300 transition hover:border-violet-400/25 hover:bg-violet-500/10 hover:text-white disabled:opacity-50"
             >
               <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-violet-400" />
@@ -88,7 +135,9 @@ export function AiChat() {
               </span>
             </div>
             <p className="max-w-md text-base text-slate-400">
-              Pregunta lo que quieras sobre el colegio — o elige un prompt de arriba.
+              {tasksLoading
+                ? "Cargando tus tareas para personalizar las respuestas…"
+                : "Pregunta lo que quieras sobre el colegio — o elige un prompt de arriba."}
             </p>
           </div>
         )}
@@ -151,12 +200,17 @@ export function AiChat() {
               void send();
             }
           }}
-          placeholder="Ask the assistant…"
-          className="min-h-[4.5rem] flex-1 resize-none rounded-xl border border-white/[0.1] bg-white/[0.05] px-4 py-3 text-base text-white outline-none transition placeholder:text-slate-500 focus:border-violet-400/50 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.12)]"
+          placeholder={
+            tasksLoading
+              ? "Cargando contexto de tareas…"
+              : "Ask the assistant…"
+          }
+          disabled={disabled}
+          className="min-h-[4.5rem] flex-1 resize-none rounded-xl border border-white/[0.1] bg-white/[0.05] px-4 py-3 text-base text-white outline-none transition placeholder:text-slate-500 focus:border-violet-400/50 focus:shadow-[0_0_0_3px_rgba(139,92,246,0.12)] disabled:opacity-50"
         />
         <button
           type="button"
-          disabled={pending}
+          disabled={disabled}
           onClick={() => void send()}
           className="inline-flex h-[4.5rem] w-14 shrink-0 items-center justify-center self-end rounded-xl border border-violet-500/25 bg-gradient-to-r from-violet-600/90 to-violet-500/90 text-white shadow-lg shadow-violet-900/25 transition hover:from-violet-500 hover:to-violet-400/90 disabled:opacity-50"
         >
