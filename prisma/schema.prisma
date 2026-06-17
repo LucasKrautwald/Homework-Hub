@@ -10,13 +10,14 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String        @id @default(cuid())
+  email        String        @unique
   passwordHash String
   name         String?
   tasks        Task[]
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  chatMessages ChatMessage[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Task {
@@ -54,4 +55,16 @@ enum TaskPriority {
   LOW
   MEDIUM
   HIGH
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  userId    String
+  role      String
+  content   String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
 }

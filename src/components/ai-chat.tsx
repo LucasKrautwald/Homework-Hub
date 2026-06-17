@@ -67,10 +67,7 @@ export function AiChat() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        messages: next.map((m) => ({
-          role: m.role,
-          content: m.content,
-        })),
+        messages: [{ role: "user", content: raw }],
         taskContext,
       }),
     });
