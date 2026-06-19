@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 
 const bodySchema = z.object({
   email: z.string().email(),
-  password: z.string().min(8, "Use at least 8 characters"),
+  password: z.string().min(8, "Usa al menos 8 caracteres"),
   name: z
     .string()
     .trim()
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
       return NextResponse.json(
-        { error: "An account with this email already exists." },
+        { error: "Ya existe una cuenta con este correo." },
         { status: 409 },
       );
     }
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("Register error:", err);
     return NextResponse.json(
-      { error: "Could not create account." },
+      { error: "No se pudo crear la cuenta." },
       { status: 500 },
     );
   }

@@ -89,7 +89,7 @@ export function HomeworkCompletedSection({
                       ) : null}
                     </Link>
                     <span className="shrink-0 rounded-full border border-emerald-400/20 bg-emerald-500/10 px-2 py-0.5 text-[0.65rem] font-semibold text-emerald-300">
-                      Done
+                      Hecha
                     </span>
                   </div>
                   <p className="mt-2 text-xs text-slate-600">

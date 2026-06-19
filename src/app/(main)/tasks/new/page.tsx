@@ -22,15 +22,15 @@ export default async function NewTaskPage({ searchParams }: Props) {
           ) : (
             <Sparkles className="h-3.5 w-3.5" />
           )}
-          {quick ? "Quick add" : "New entry"}
+          {quick ? "Añadir rápido" : "Nueva tarea"}
         </span>
         <h1 className="mt-3 bg-gradient-to-r from-violet-700 to-cyan-600 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent dark:from-violet-300 dark:to-cyan-400">
-          {quick ? "Añadir rápido" : "Add homework"}
+          {quick ? "Añadir rápido" : "Nueva tarea"}
         </h1>
         <p className="mt-2 text-sm font-medium text-slate-600 dark:text-slate-400">
           {quick
             ? "Escribe el título y ajusta la fecha cuando puedas."
-            : `Set a due date, pick short vs long project, and link a Google file when you're ready.`}
+            : "Indica la fecha de entrega, elige si es tarea corta o proyecto largo, y enlaza un archivo de Google si quieres."}
         </p>
       </div>
       <TaskForm autoFocusTitle={quick} />

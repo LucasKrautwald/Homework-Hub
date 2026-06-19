@@ -78,7 +78,7 @@ export function DashboardQuickAdd() {
         className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.1] bg-white/[0.04] px-5 py-3 text-sm font-semibold text-slate-200 shadow-sm shadow-black/20 backdrop-blur-[20px] transition hover:border-violet-400/30 hover:bg-white/[0.06] hover:text-white focus-visible:outline focus-visible:ring-2 focus-visible:ring-violet-400/30"
       >
         <Zap className="h-4 w-4 text-violet-400" />
-        Quick add
+        Añadir rápido
       </button>
 
       <dialog
@@ -93,7 +93,7 @@ export function DashboardQuickAdd() {
           <div className="flex items-center gap-2 text-violet-400/90">
             <Zap className="h-4 w-4" />
             <span className="text-xs font-bold uppercase tracking-wider">
-              Quick add
+              Añadir rápido
             </span>
           </div>
           <h2 id={titleId} className="text-lg font-bold tracking-tight text-white">

@@ -24,7 +24,7 @@ export function TaskQuickComplete({
           "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400",
           className,
         )}
-        title="Done"
+        title="Hecha"
       >
         <Check className="h-4 w-4" strokeWidth={3} />
       </span>
@@ -47,7 +47,7 @@ export function TaskQuickComplete({
   return (
     <button
       type="button"
-      title="Mark done"
+      title="Marcar como hecha"
       disabled={pending}
       onClick={onClick}
       className={cn(

@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Homework Hub",
-  description: "Track school work, due dates, and Google file links.",
+  description: "Organiza tareas escolares, fechas de entrega y enlaces a Google.",
 };
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html lang="es" className="h-full antialiased">
       <body className="flex min-h-full flex-col font-sans antialiased">
         <Providers>{children}</Providers>
       </body>

@@ -11,6 +11,7 @@ import {
   startOfMonth,
   startOfWeek,
 } from "date-fns";
+import { es } from "date-fns/locale";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
@@ -50,7 +51,7 @@ export default async function CalendarPage({ searchParams }: Props) {
 
   const prev = format(addMonths(monthStart, -1), "yyyy-MM");
   const next = format(addMonths(monthStart, 1), "yyyy-MM");
-  const label = format(monthStart, "MMMM yyyy");
+  const label = format(monthStart, "MMMM yyyy", { locale: es });
   const today = new Date();
 
   return (
@@ -58,17 +59,17 @@ export default async function CalendarPage({ searchParams }: Props) {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="bg-gradient-to-r from-violet-700 via-fuchsia-600 to-cyan-600 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent dark:from-violet-300 dark:via-fuchsia-400 dark:to-cyan-400">
-            Calendar
+            Calendario
           </h1>
           <p className="mt-2 text-sm font-medium text-slate-600 dark:text-slate-400">
-            Dots show due items — tap a task to open it.
+            Los puntos marcan entregas — toca una tarea para abrirla.
           </p>
         </div>
         <div className="flex items-center gap-2">
           <Link
             href={`/calendar?m=${prev}`}
             className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/90 text-violet-700 shadow-md ring-1 ring-violet-200/80 transition hover:bg-violet-50 dark:bg-slate-900/80 dark:text-violet-300 dark:ring-violet-500/30 dark:hover:bg-violet-950/80"
-            aria-label="Previous month"
+            aria-label="Mes anterior"
           >
             <ChevronLeft className="h-5 w-5" />
           </Link>
@@ -78,7 +79,7 @@ export default async function CalendarPage({ searchParams }: Props) {
           <Link
             href={`/calendar?m=${next}`}
             className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white/90 text-violet-700 shadow-md ring-1 ring-violet-200/80 transition hover:bg-violet-50 dark:bg-slate-900/80 dark:text-violet-300 dark:ring-violet-500/30 dark:hover:bg-violet-950/80"
-            aria-label="Next month"
+            aria-label="Mes siguiente"
           >
             <ChevronRight className="h-5 w-5" />
           </Link>
@@ -87,7 +88,7 @@ export default async function CalendarPage({ searchParams }: Props) {
 
       <div className="overflow-hidden rounded-3xl border border-violet-200/50 bg-white/90 shadow-xl shadow-violet-500/10 ring-1 ring-violet-500/20 dark:border-violet-500/20 dark:bg-slate-900/70">
         <div className="grid grid-cols-7 gap-px bg-gradient-to-br from-violet-200/60 to-cyan-200/40 p-px dark:from-violet-900/40 dark:to-cyan-900/30">
-          {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => (
+          {["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].map((d) => (
             <div
               key={d}
               className="bg-gradient-to-b from-violet-100/90 to-white/90 px-1 py-2 text-center text-xs font-bold uppercase tracking-wider text-violet-700 dark:from-violet-950/80 dark:to-slate-900/90 dark:text-violet-300"

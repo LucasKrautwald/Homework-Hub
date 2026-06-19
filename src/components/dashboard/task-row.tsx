@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { cn } from "@/lib/cn";
+import { categoryLabels, priorityLabels, statusLabels } from "@/lib/task-labels";
 import { useTaskCompletion } from "@/components/task-completion/task-completion-provider";
 
 export type DashboardTask = {
@@ -47,12 +48,6 @@ const sectionStyles: Record<
     hoverGlow:
       "hover:shadow-[0_12px_40px_-10px_rgba(59,130,246,0.2),-4px_0_16px_-2px_rgba(59,130,246,0.45)]",
   },
-};
-
-const statusLabels: Record<string, string> = {
-  TODO: "Todo",
-  IN_PROGRESS: "In progress",
-  DONE: "Done",
 };
 
 type PillTone = "cyan" | "amber" | "violet" | "slate" | "emerald" | "rose";
@@ -195,17 +190,13 @@ export function TaskRow({
             {task.dueLabel}
           </span>
           <Pill tone={categoryTone}>
-            {task.category === "long" ? "Long" : "Short"}
+            {categoryLabels[task.category] ?? task.category}
           </Pill>
           <Pill tone={statusTone}>
             {statusLabels[task.status] ?? task.status.replace("_", " ")}
           </Pill>
           <Pill tone={priorityTone}>
-            {task.priority === "HIGH"
-              ? "High"
-              : task.priority === "MEDIUM"
-                ? "Med"
-                : "Low"}
+            {priorityLabels[task.priority] ?? task.priority}
           </Pill>
         </span>
       </Link>

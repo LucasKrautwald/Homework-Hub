@@ -10,7 +10,7 @@ export function DeleteTaskButton({ taskId }: { taskId: string }) {
   const [pending, setPending] = useState(false);
 
   async function onDelete() {
-    if (!confirm("Delete this homework item?")) return;
+    if (!confirm("¿Eliminar esta tarea?")) return;
     setPending(true);
     await fetch(`/api/tasks/${taskId}`, { method: "DELETE" });
     setPending(false);
@@ -28,7 +28,7 @@ export function DeleteTaskButton({ taskId }: { taskId: string }) {
       className="gap-1.5"
     >
       <Trash2 className="h-4 w-4" />
-      {pending ? "Deleting…" : "Delete"}
+      {pending ? "Eliminando…" : "Eliminar"}
     </Button>
   );
 }

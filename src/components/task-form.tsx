@@ -34,13 +34,13 @@ const statusOptions: {
   label: string;
   color: string;
 }[] = [
-  { value: "TODO", label: "To do", color: "from-slate-500 to-slate-600" },
+  { value: "TODO", label: "Por hacer", color: "from-slate-500 to-slate-600" },
   {
     value: "IN_PROGRESS",
-    label: "In progress",
+    label: "En progreso",
     color: "from-violet-500 to-fuchsia-500",
   },
-  { value: "DONE", label: "Done", color: "from-emerald-500 to-teal-500" },
+  { value: "DONE", label: "Hecha", color: "from-emerald-500 to-teal-500" },
 ];
 
 const priorityOptions: {
@@ -48,9 +48,9 @@ const priorityOptions: {
   label: string;
   color: string;
 }[] = [
-  { value: "LOW", label: "Low", color: "from-emerald-500 to-teal-500" },
-  { value: "MEDIUM", label: "Medium", color: "from-amber-500 to-orange-500" },
-  { value: "HIGH", label: "High", color: "from-rose-500 to-red-500" },
+  { value: "LOW", label: "Baja", color: "from-emerald-500 to-teal-500" },
+  { value: "MEDIUM", label: "Media", color: "from-amber-500 to-orange-500" },
+  { value: "HIGH", label: "Alta", color: "from-rose-500 to-red-500" },
 ];
 
 export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
@@ -101,7 +101,7 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
     });
     setPending(false);
     if (!res.ok) {
-      setError("Could not save. Check fields and try again.");
+      setError("No se pudo guardar. Revisa los campos e inténtalo de nuevo.");
       return;
     }
     const data = await res.json();
@@ -115,29 +115,29 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
       className="space-y-6 rounded-3xl border border-violet-200/50 bg-white/90 p-6 shadow-xl shadow-violet-500/10 dark:border-violet-500/20 dark:bg-slate-900/75"
     >
       <label className="flex flex-col gap-2 text-sm font-bold text-slate-800 dark:text-slate-200">
-        Title
+        Título
         <input
           required
           autoFocus={Boolean(autoFocusTitle)}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="e.g. Biology chapter 5 questions"
+          placeholder="Ej. Preguntas del capítulo 5 de biología"
           className="rounded-xl border-2 border-violet-100 bg-white px-4 py-3 text-base font-medium text-slate-900 shadow-inner outline-none transition focus:border-violet-400 dark:border-violet-500/30 dark:bg-slate-950 dark:text-white"
         />
       </label>
 
       <label className="flex flex-col gap-2 text-sm font-bold text-slate-800 dark:text-slate-200">
-        Subject (optional)
+        Materia (opcional)
         <input
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
-          placeholder="e.g. Biology, Math, History"
+          placeholder="Ej. Biología, Matemáticas, Historia"
           className="rounded-xl border-2 border-violet-100 bg-white px-4 py-3 text-base font-medium text-slate-900 shadow-inner outline-none transition focus:border-violet-400 dark:border-violet-500/30 dark:bg-slate-950 dark:text-white"
         />
       </label>
 
       <label className="flex flex-col gap-2 text-sm font-bold text-slate-800 dark:text-slate-200">
-        Due
+        Fecha de entrega
         <input
           type="datetime-local"
           required
@@ -149,7 +149,7 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
 
       <div>
         <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
-          Category
+          Tipo
         </p>
         <div className="mt-2 grid grid-cols-2 gap-3">
           <button
@@ -163,10 +163,10 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
             )}
           >
             <span className="text-xs font-bold uppercase tracking-wide text-cyan-600 dark:text-cyan-400">
-              Quick
+              Rápida
             </span>
             <span className="mt-1 block font-bold text-slate-900 dark:text-white">
-              Short homework
+              Tarea corta
             </span>
           </button>
           <button
@@ -180,10 +180,10 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
             )}
           >
             <span className="text-xs font-bold uppercase tracking-wide text-amber-700 dark:text-amber-400">
-              Deep work
+              Proyecto
             </span>
             <span className="mt-1 block font-bold text-slate-900 dark:text-white">
-              Long project
+              Tarea larga
             </span>
           </button>
         </div>
@@ -191,7 +191,7 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
 
       <div>
         <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
-          Status
+          Estado
         </p>
         <div className="mt-2 flex flex-wrap gap-2">
           {statusOptions.map(({ value, label, color }) => (
@@ -214,7 +214,7 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
 
       <div>
         <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
-          Priority
+          Prioridad
         </p>
         <div className="mt-2 flex flex-wrap gap-2">
           {priorityOptions.map(({ value, label, color }) => (
@@ -237,7 +237,7 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
 
       <div>
         <p className="text-sm font-bold text-slate-800 dark:text-slate-200">
-          Google file (optional)
+          Archivo de Google (opcional)
         </p>
         <input
           type="url"
@@ -253,7 +253,7 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
             target="_blank"
             rel="noreferrer"
           >
-            <FileText className="h-3.5 w-3.5" /> Doc
+            <FileText className="h-3.5 w-3.5" /> Documento
           </a>
           <a
             className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-800 ring-1 ring-emerald-200 transition hover:bg-emerald-100 dark:bg-emerald-950/40 dark:text-emerald-200 dark:ring-emerald-500/30"
@@ -261,7 +261,7 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
             target="_blank"
             rel="noreferrer"
           >
-            <FileSpreadsheet className="h-3.5 w-3.5" /> Sheet
+            <FileSpreadsheet className="h-3.5 w-3.5" /> Hoja
           </a>
           <a
             className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-900 ring-1 ring-amber-200 transition hover:bg-amber-100 dark:bg-amber-950/40 dark:text-amber-200 dark:ring-amber-500/30"
@@ -269,7 +269,7 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
             target="_blank"
             rel="noreferrer"
           >
-            <Presentation className="h-3.5 w-3.5" /> Slides
+            <Presentation className="h-3.5 w-3.5" /> Presentación
           </a>
           {googleUrl ? (
             <a
@@ -278,7 +278,7 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 rounded-full bg-violet-100 px-3 py-1.5 text-xs font-bold text-violet-800 ring-1 ring-violet-200 dark:bg-violet-950/50 dark:text-violet-200"
             >
-              <ExternalLink className="h-3.5 w-3.5" /> Open link
+              <ExternalLink className="h-3.5 w-3.5" /> Abrir enlace
             </a>
           ) : null}
         </div>
@@ -287,13 +287,13 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
       <label className="flex flex-col gap-2 text-sm font-bold text-slate-800 dark:text-slate-200">
         <span className="inline-flex items-center gap-2">
           <StickyNote className="h-4 w-4 text-violet-500" />
-          Notes
+          Notas
         </span>
         <textarea
           rows={4}
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          placeholder="Ideas, teacher instructions, rubric…"
+          placeholder="Ideas, instrucciones del profesor, rúbrica…"
           className="rounded-xl border-2 border-violet-100 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-violet-400 dark:border-violet-500/30 dark:bg-slate-950 dark:text-white"
         />
       </label>
@@ -314,12 +314,12 @@ export function TaskForm({ taskId, initial, autoFocusTitle }: Props) {
         {pending ? (
           <>
             <Loader2 className="h-5 w-5 animate-spin" />
-            Saving…
+            Guardando…
           </>
         ) : taskId ? (
-          "Save changes"
+          "Guardar cambios"
         ) : (
-          "Create homework"
+          "Crear tarea"
         )}
       </Button>
     </form>

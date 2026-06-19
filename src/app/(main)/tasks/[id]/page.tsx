@@ -29,23 +29,23 @@ export default async function TaskDetailPage({ params }: Props) {
           href="/tasks"
           className="inline-flex items-center gap-1 text-sm font-bold text-violet-600 transition hover:text-violet-800 dark:text-violet-400 dark:hover:text-violet-200"
         >
-          ← Back to all homework
+          ← Volver a todas las tareas
         </Link>
         <DeleteTaskButton taskId={task.id} />
       </div>
       <div>
         <span className="inline-flex items-center gap-2 rounded-full bg-violet-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-violet-800 dark:bg-violet-500/20 dark:text-violet-200">
           <Pencil className="h-3.5 w-3.5" />
-          Edit
+          Editar
         </span>
         <h1 className="mt-3 bg-gradient-to-r from-fuchsia-600 to-violet-600 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent dark:from-fuchsia-400 dark:to-violet-400">
-          Edit homework
+          Editar tarea
         </h1>
         <p className="mt-1 text-lg font-semibold text-slate-800 dark:text-slate-200">
           {task.title}
         </p>
         <p className="mt-2 text-sm font-medium text-slate-600 dark:text-slate-400">
-          Update status, due date, or your Google Doc / Sheet / Slide link.
+          Actualiza el estado, la fecha de entrega o el enlace a Google Docs / Sheets / Slides.
         </p>
       </div>
       <TaskForm

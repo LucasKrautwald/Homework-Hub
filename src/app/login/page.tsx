@@ -26,7 +26,7 @@ export default function LoginPage() {
     });
     setPending(false);
     if (res?.error) {
-      setError("Invalid email or password.");
+      setError("Correo o contraseña incorrectos.");
       return;
     }
     window.location.href = "/dashboard";
@@ -35,15 +35,15 @@ export default function LoginPage() {
   return (
     <AuthShell>
       <h1 className="text-center text-2xl font-semibold tracking-tight text-white">
-        Welcome back
+        Bienvenido de nuevo
       </h1>
       <p className="mt-2 text-center text-sm text-slate-400">
-        Sign in to see your assignments and calendar.
+        Inicia sesión para ver tus tareas y calendario.
       </p>
 
       <form onSubmit={onSubmit} className="mt-8 flex flex-col gap-5">
         <label className="flex flex-col gap-2 text-sm font-medium text-slate-300">
-          Email
+          Correo electrónico
           <span className="relative">
             <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
             <input
@@ -53,13 +53,13 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={inputClass}
-              placeholder="you@school.edu"
+              placeholder="tu@colegio.edu"
             />
           </span>
         </label>
 
         <label className="flex flex-col gap-2 text-sm font-medium text-slate-300">
-          Password
+          Contraseña
           <span className="relative">
             <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
             <input
@@ -88,21 +88,21 @@ export default function LoginPage() {
           {pending ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />
-              Signing in…
+              Iniciando sesión…
             </>
           ) : (
-            "Sign in"
+            "Iniciar sesión"
           )}
         </button>
       </form>
 
       <p className="mt-8 text-center text-sm text-slate-500">
-        No account?{" "}
+        ¿No tienes cuenta?{" "}
         <Link
           href="/register"
           className="font-medium text-violet-400 transition hover:text-violet-300"
         >
-          Create one
+          Crear una
         </Link>
       </p>
     </AuthShell>

@@ -34,7 +34,7 @@ export default function RegisterPage() {
       setError(
         typeof data.error === "string"
           ? data.error
-          : "Could not register. Check your inputs.",
+          : "No se pudo registrar. Revisa los datos.",
       );
       return;
     }
@@ -44,10 +44,10 @@ export default function RegisterPage() {
   return (
     <AuthShell>
       <h1 className="text-center text-2xl font-semibold tracking-tight text-white">
-        Create account
+        Crear cuenta
       </h1>
       <p className="mt-2 text-center text-sm text-slate-400">
-        Password must be at least 8 characters.
+        La contraseña debe tener al menos 8 caracteres.
       </p>
       <form onSubmit={onSubmit} className="mt-8 flex flex-col gap-5">
         <label className="flex flex-col gap-2 text-sm font-medium text-slate-300">
@@ -65,7 +65,7 @@ export default function RegisterPage() {
           </span>
         </label>
         <label className="flex flex-col gap-2 text-sm font-medium text-slate-300">
-          Email
+          Correo electrónico
           <span className="relative">
             <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
             <input
@@ -75,11 +75,12 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={inputClass}
+              placeholder="tu@colegio.edu"
             />
           </span>
         </label>
         <label className="flex flex-col gap-2 text-sm font-medium text-slate-300">
-          Password
+          Contraseña
           <span className="relative">
             <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
             <input
@@ -90,6 +91,7 @@ export default function RegisterPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={inputClass}
+              placeholder="••••••••"
             />
           </span>
         </label>
@@ -106,20 +108,20 @@ export default function RegisterPage() {
           {pending ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />
-              Creating…
+              Creando cuenta…
             </>
           ) : (
-            "Create account"
+            "Crear cuenta"
           )}
         </button>
       </form>
       <p className="mt-8 text-center text-sm text-slate-500">
-        Already have an account?{" "}
+        ¿Ya tienes cuenta?{" "}
         <Link
           href="/login"
           className="font-medium text-violet-400 transition hover:text-violet-300"
         >
-          Sign in
+          Iniciar sesión
         </Link>
       </p>
     </AuthShell>

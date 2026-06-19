@@ -14,10 +14,10 @@ import {
 import { cn } from "@/lib/cn";
 
 const links = [
-  { href: "/dashboard", label: "Dashboard", Icon: LayoutDashboard },
-  { href: "/tasks", label: "Homework", Icon: ListTodo },
-  { href: "/calendar", label: "Calendar", Icon: CalendarDays },
-  { href: "/ai", label: "Assistant", Icon: Sparkles },
+  { href: "/dashboard", label: "Panel", Icon: LayoutDashboard },
+  { href: "/tasks", label: "Tareas", Icon: ListTodo },
+  { href: "/calendar", label: "Calendario", Icon: CalendarDays },
+  { href: "/ai", label: "Asistente", Icon: Sparkles },
 ];
 
 export function AppNav() {
@@ -42,7 +42,7 @@ export function AppNav() {
               Homework Hub
             </span>
             <span className="block text-[0.65rem] font-medium text-slate-500">
-              Stay on track
+              Mantente al día
             </span>
           </span>
         </Link>
@@ -87,7 +87,7 @@ export function AppNav() {
             onClick={() => signOut({ callbackUrl: "/login" })}
           >
             <LogOut className="h-4 w-4" />
-            <span className="hidden sm:inline">Sign out</span>
+            <span className="hidden sm:inline">Cerrar sesión</span>
           </button>
         </nav>
       </div>

@@ -81,16 +81,16 @@ export function HomeworkFilters({
   }
 
   const categoryFilters: { key: FilterKey; label: string }[] = [
-    { key: "all", label: "All" },
-    { key: "short", label: "Short" },
-    { key: "long", label: "Long" },
+    { key: "all", label: "Todas" },
+    { key: "short", label: "Corta" },
+    { key: "long", label: "Larga" },
   ];
 
   const priorityFilters: { key: PriorityKey; label: string }[] = [
-    { key: "all", label: "All" },
-    { key: "HIGH", label: "High" },
-    { key: "MEDIUM", label: "Medium" },
-    { key: "LOW", label: "Low" },
+    { key: "all", label: "Todas" },
+    { key: "HIGH", label: "Alta" },
+    { key: "MEDIUM", label: "Media" },
+    { key: "LOW", label: "Baja" },
   ];
 
   return (

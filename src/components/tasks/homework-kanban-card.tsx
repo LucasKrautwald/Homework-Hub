@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { CalendarDays, Check } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { categoryLabels, priorityLabels, statusLabels } from "@/lib/task-labels";
 import { useTaskCompletion } from "@/components/task-completion/task-completion-provider";
 
 export type HomeworkTask = {
@@ -22,16 +23,10 @@ const statusProgress: Record<string, number> = {
   DONE: 100,
 };
 
-const statusLabels: Record<string, string> = {
-  TODO: "Todo",
-  IN_PROGRESS: "In progress",
-  DONE: "Done",
-};
-
 const priorityMeta = {
-  HIGH: { label: "High", dot: "bg-rose-400", bg: "bg-rose-500/15 text-rose-200 border-rose-400/20" },
-  MEDIUM: { label: "Medium", dot: "bg-amber-400", bg: "bg-amber-500/15 text-amber-100 border-amber-400/20" },
-  LOW: { label: "Low", dot: "bg-emerald-400", bg: "bg-emerald-500/15 text-emerald-200 border-emerald-400/20" },
+  HIGH: { label: priorityLabels.HIGH, dot: "bg-rose-400", bg: "bg-rose-500/15 text-rose-200 border-rose-400/20" },
+  MEDIUM: { label: priorityLabels.MEDIUM, dot: "bg-amber-400", bg: "bg-amber-500/15 text-amber-100 border-amber-400/20" },
+  LOW: { label: priorityLabels.LOW, dot: "bg-emerald-400", bg: "bg-emerald-500/15 text-emerald-200 border-emerald-400/20" },
 } as const;
 
 function ConfettiBurst({ show }: { show: boolean }) {
@@ -144,7 +139,7 @@ export function HomeworkKanbanCard({
             )}
           >
             <span className={cn("h-1.5 w-1.5 rounded-full", accent.bar)} />
-            {isLong ? "Long" : "Short"}
+            {isLong ? categoryLabels.long : categoryLabels.short}
           </span>
 
           {!done ? (
