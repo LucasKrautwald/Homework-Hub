@@ -5,6 +5,28 @@ import { prisma } from "@/lib/prisma";
 type Msg = { role: "user" | "assistant" | "system"; content: string };
 type HistoryMsg = { role: string; content: string };
 
+const AI_CONNECTION_ERROR =
+  "⚠️ No se pudo conectar con la IA. Verifica tu API key o créditos.";
+
+function parseOpenAiError(
+  status: number,
+  errText: string,
+): { errorCode: string; status: number } {
+  let code = "openai_error";
+  try {
+    const parsed = JSON.parse(errText) as {
+      error?: { code?: string; type?: string };
+    };
+    const errCode = parsed.error?.code ?? parsed.error?.type;
+    if (status === 401 || errCode === "invalid_api_key") code = "auth";
+    if (errCode === "insufficient_quota") code = "quota";
+  } catch {
+    if (status === 401) code = "auth";
+  }
+  const httpStatus = code === "auth" ? 401 : 502;
+  return { errorCode: code, status: httpStatus };
+}
+
 function extractUserContent(messages: Msg[]): string | null {
   for (let i = messages.length - 1; i >= 0; i--) {
     const m = messages[i];
@@ -59,10 +81,7 @@ export async function POST(req: Request) {
     const key = process.env.OPENAI_API_KEY;
     if (!key) {
       return NextResponse.json(
-        {
-          error:
-            "OPENAI_API_KEY is not set. Add it to .env to use the assistant.",
-        },
+        { error: AI_CONNECTION_ERROR, errorCode: "missing_api_key" },
         { status: 503 },
       );
     }
@@ -91,8 +110,8 @@ export async function POST(req: Request) {
       typeof body.taskContext === "string" ? body.taskContext.trim() : "";
 
     const systemContent = taskContext
-      ? `${taskContext}\n\nResponde en el mismo idioma que use el estudiante. Sé conciso, práctico y específico con sus tareas cuando aplique.`
-      : "You are a helpful school assistant inside Homework Hub. Help organize work, plan study time, and explain concepts. Be concise.";
+      ? `${taskContext}\n\nResponde en el mismo idioma que use el estudiante. Sé conciso y práctico.`
+      : "Asistente de estudio en Homework Hub. Ayuda a organizar trabajo y explicar conceptos. Sé conciso.";
 
     const history = await persistAndLoadHistory(userId, userContent);
 
@@ -118,12 +137,10 @@ export async function POST(req: Request) {
     if (!res.ok) {
       const errText = await res.text();
       console.error("OpenAI upstream error:", errText.slice(0, 500));
+      const { errorCode, status } = parseOpenAiError(res.status, errText);
       return NextResponse.json(
-        {
-          error: "Error al contactar la IA. Revisa OPENAI_API_KEY o inténtalo de nuevo.",
-          detail: errText.slice(0, 200),
-        },
-        { status: 502 },
+        { error: AI_CONNECTION_ERROR, errorCode },
+        { status },
       );
     }
 

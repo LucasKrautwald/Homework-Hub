@@ -8,9 +8,13 @@ type TaskLike = {
 };
 
 export function formatPendingTasksContext(tasks: TaskLike[]): string {
+  if (tasks.length === 0) {
+    return "El estudiante no tiene ninguna tarea registrada. Si pide un plan personalizado, dilo explícitamente y ofrece ayuda general o crear la primera tarea.";
+  }
+
   const pending = tasks.filter((t) => t.status !== "DONE");
   if (pending.length === 0) {
-    return "Eres un asistente de estudio. El estudiante no tiene tareas pendientes en este momento. Usa este contexto para dar respuestas personalizadas.";
+    return "El estudiante tiene tareas pero ninguna pendiente. Usa este contexto para personalizar respuestas.";
   }
 
   const list = pending
@@ -25,5 +29,5 @@ export function formatPendingTasksContext(tasks: TaskLike[]): string {
     })
     .join("\n");
 
-  return `Eres un asistente de estudio. El estudiante tiene estas tareas pendientes:\n${list}\nUsa este contexto para dar respuestas personalizadas.`;
+  return `Tareas pendientes del estudiante:\n${list}\nResponde en su idioma. Sé conciso y específico con sus tareas.`;
 }
