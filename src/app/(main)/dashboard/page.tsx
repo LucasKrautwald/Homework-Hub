@@ -91,15 +91,15 @@ export default async function DashboardPage() {
       <OnboardingModal userName={displayName} taskCount={tasks.length} />
 
       <div className="space-y-10 pt-2">
-        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <DashboardGreeting displayName={displayName} />
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2.5 sm:flex-nowrap sm:gap-3">
             <DashboardQuickAdd />
             <Link
               href="/tasks/new"
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-violet-500/20 bg-gradient-to-r from-violet-600/80 via-violet-500/80 to-violet-600/80 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-violet-900/25 transition hover:from-violet-500/90 hover:via-violet-400/80 hover:to-violet-500/90 hover:shadow-violet-800/30 focus-visible:outline focus-visible:ring-2 focus-visible:ring-violet-400/40"
+              className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-violet-500/30 bg-gradient-to-r from-violet-600 via-violet-500 to-violet-600 px-7 text-sm font-semibold text-white shadow-lg shadow-violet-900/30 transition hover:from-violet-500 hover:via-violet-400 hover:to-violet-500 hover:shadow-violet-800/40 focus-visible:outline focus-visible:ring-2 focus-visible:ring-violet-400/40"
             >
-              <Plus className="h-5 w-5" />
+              <Plus className="h-5 w-5 shrink-0" />
               Nueva tarea
             </Link>
             <AiPrioritizeButton tasks={prioritizeTasks} />
@@ -110,8 +110,8 @@ export default async function DashboardPage() {
 
         <div className="grid gap-4 sm:grid-cols-3">
           <StatCard
-            label="Tareas abiertas"
-            hint="Sin completar"
+            label="Pendientes"
+            hint="Por terminar"
             value={openCount}
             accent="violet"
             icon={<ClipboardList className="h-5 w-5" strokeWidth={1.5} />}
@@ -125,7 +125,7 @@ export default async function DashboardPage() {
           />
           <StatCard
             label="Vencidas"
-            hint="Fecha anterior a hoy"
+            hint="Ya pasaron de fecha"
             value={overdue.length}
             accent="rose"
             icon={<AlertTriangle className="h-5 w-5" strokeWidth={1.5} />}
@@ -139,8 +139,8 @@ export default async function DashboardPage() {
           accent="rose"
           defaultOpen={overdue.length > 0}
           storageKey="hh-section-vencidas"
-          emptyTitle="Todo al día."
-          emptyBody="No tienes tareas vencidas. Mantén el ritmo — cada entrega cuenta."
+          emptyTitle="Al día."
+          emptyBody="No tienes tareas atrasadas. ¡Sigue así!"
         >
           {renderRows(overdue, "overdue")}
         </TaskSection>
@@ -152,10 +152,10 @@ export default async function DashboardPage() {
           accent="amber"
           defaultOpen={false}
           storageKey="hh-section-esta-semana"
-          emptyTitle="Semana despejada."
+          emptyTitle="Nada pendiente esta semana."
           emptyBody={
             <>
-              Nada pendiente hasta el domingo.{" "}
+              Hasta el domingo no tienes entregas.{" "}
               <Link
                 href="/calendar"
                 className="font-medium text-violet-400/90 transition hover:text-violet-300"
@@ -175,15 +175,15 @@ export default async function DashboardPage() {
           accent="blue"
           defaultOpen={false}
           storageKey="hh-section-proximamente"
-          emptyTitle="Horizonte limpio."
+          emptyTitle="Sin tareas más adelante."
           emptyBody={
             <>
-              Sin entregas después de esta semana. Planifica con{" "}
+              No hay nada después de esta semana.{" "}
               <Link
                 href="/tasks/new"
                 className="font-medium text-violet-400/90 transition hover:text-violet-300"
               >
-                nueva tarea →
+                Crear tarea →
               </Link>
             </>
           }

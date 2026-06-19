@@ -62,7 +62,7 @@ export default async function CalendarPage({ searchParams }: Props) {
             Calendario
           </h1>
           <p className="mt-2 text-sm font-medium text-slate-600 dark:text-slate-400">
-            Los puntos marcan entregas — toca una tarea para abrirla.
+            Los puntos indican fechas de entrega. Toca una tarea para verla.
           </p>
         </div>
         <div className="flex items-center gap-2">

@@ -59,7 +59,7 @@ export function AiPrioritizeButton({ tasks }: { tasks: PrioritizeTask[] }) {
         type="button"
         onClick={open}
         disabled={tasks.length === 0}
-        className="inline-flex items-center justify-center gap-2 rounded-xl border border-violet-500/25 bg-violet-500/10 px-5 py-3 text-sm font-semibold text-violet-200 shadow-sm transition hover:border-violet-400/40 hover:bg-violet-500/20 hover:text-white disabled:opacity-40"
+        className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-violet-500/25 bg-violet-500/10 px-5 text-sm font-semibold text-violet-200 shadow-sm transition hover:border-violet-400/40 hover:bg-violet-500/20 hover:text-white disabled:opacity-40"
       >
         <Sparkles className="h-4 w-4" />
         Priorizar con IA
@@ -73,7 +73,7 @@ export function AiPrioritizeButton({ tasks }: { tasks: PrioritizeTask[] }) {
         }}
       >
         <div className="flex items-start justify-between gap-3">
-          <h2 className="text-lg font-bold text-white">Priorización inteligente</h2>
+          <h2 className="text-lg font-bold text-white">¿Qué hago primero?</h2>
           <button
             type="button"
             onClick={close}

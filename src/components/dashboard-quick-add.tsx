@@ -75,7 +75,7 @@ export function DashboardQuickAdd() {
       <button
         type="button"
         onClick={open}
-        className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/[0.1] bg-white/[0.04] px-5 py-3 text-sm font-semibold text-slate-200 shadow-sm shadow-black/20 backdrop-blur-[20px] transition hover:border-violet-400/30 hover:bg-white/[0.06] hover:text-white focus-visible:outline focus-visible:ring-2 focus-visible:ring-violet-400/30"
+        className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-white/[0.1] bg-white/[0.04] px-5 text-sm font-semibold text-slate-200 shadow-sm shadow-black/20 backdrop-blur-[20px] transition hover:border-violet-400/30 hover:bg-white/[0.06] hover:text-white focus-visible:outline focus-visible:ring-2 focus-visible:ring-violet-400/30"
       >
         <Zap className="h-4 w-4 text-violet-400" />
         Añadir rápido

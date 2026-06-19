@@ -38,7 +38,7 @@ export default function LoginPage() {
         Bienvenido de nuevo
       </h1>
       <p className="mt-2 text-center text-sm text-slate-400">
-        Inicia sesión para ver tus tareas y calendario.
+        Inicia sesión para ver tus tareas y el calendario.
       </p>
 
       <form onSubmit={onSubmit} className="mt-8 flex flex-col gap-5">

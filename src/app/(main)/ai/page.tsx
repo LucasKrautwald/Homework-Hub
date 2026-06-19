@@ -8,7 +8,7 @@ export default function AiPage() {
           Asistente de estudio
         </h1>
         <p className="mt-2 text-sm text-slate-400">
-          Planifica, repasa y organiza tu trabajo con ayuda de la IA.
+          Tu asistente de estudio. Te ayuda a planificar, repasar y organizar tus tareas.
         </p>
       </div>
       <AiChat />

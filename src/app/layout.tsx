@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Homework Hub",
-  description: "Organiza tareas escolares, fechas de entrega y enlaces a Google.",
+  description: "Organiza tus tareas, fechas de entrega y archivos de Google.",
 };
 
 export default function RootLayout({

@@ -30,7 +30,7 @@ const QUICK_PROMPTS = [
   "Planifica mi semana de estudio",
   "Hazme preguntas sobre mis apuntes",
   "Divide un proyecto grande en pasos",
-  "Explícame qué es el recall activo",
+  "Explícame el repaso activo",
 ];
 
 const CONNECTION_ERROR_CODES = new Set([
@@ -302,8 +302,8 @@ export function AiChat() {
                 </div>
                 <p className="max-w-md text-base text-slate-400">
                   {tasksLoading
-                    ? "Cargando tus tareas para personalizar las respuestas…"
-                    : "Pregunta lo que quieras sobre el colegio — o elige un prompt de arriba."}
+                  ? "Cargando tus tareas…"
+                  : "Pregúntame lo que necesites del colegio o elige una sugerencia."}
                 </p>
               </div>
             )}

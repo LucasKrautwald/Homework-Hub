@@ -42,7 +42,7 @@ export function AppNav() {
               Homework Hub
             </span>
             <span className="block text-[0.65rem] font-medium text-slate-500">
-              Mantente al día
+              Al día con tus tareas
             </span>
           </span>
         </Link>

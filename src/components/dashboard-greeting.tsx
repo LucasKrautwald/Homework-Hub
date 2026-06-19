@@ -55,7 +55,7 @@ export function DashboardGreeting({
         }
       >
         <Clock className="h-3 w-3" aria-hidden />
-        Última actualización {updatedAt ?? "00:00"}
+        Última actualización: {updatedAt ?? "00:00"}
       </p>
     </div>
   );

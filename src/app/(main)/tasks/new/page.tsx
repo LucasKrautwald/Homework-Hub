@@ -30,7 +30,7 @@ export default async function NewTaskPage({ searchParams }: Props) {
         <p className="mt-2 text-sm font-medium text-slate-600 dark:text-slate-400">
           {quick
             ? "Escribe el título y ajusta la fecha cuando puedas."
-            : "Indica la fecha de entrega, elige si es tarea corta o proyecto largo, y enlaza un archivo de Google si quieres."}
+            : "Indica la fecha de entrega, elige si es tarea corta o proyecto largo, y pega un enlace de Google Docs si lo tienes."}
         </p>
       </div>
       <TaskForm autoFocusTitle={quick} />

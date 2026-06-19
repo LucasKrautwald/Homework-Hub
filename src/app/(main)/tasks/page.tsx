@@ -120,7 +120,7 @@ export default async function TasksPage({ searchParams }: Props) {
             No hay tareas pendientes aquí
           </p>
           <p className="mt-2 text-sm text-slate-500">
-            Crea una nueva o revisa las completadas abajo.{" "}
+            Crea una nueva o mira las completadas abajo.{" "}
             <Link
               href="/tasks/new"
               className="font-medium text-violet-400 transition hover:text-violet-300"
