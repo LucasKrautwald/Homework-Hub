@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Task: 'Task',
-  ChatMessage: 'ChatMessage'
+  ChatMessage: 'ChatMessage',
+  WeeklySummary: 'WeeklySummary'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -113,6 +114,17 @@ export const ChatMessageScalarFieldEnum = {
 } as const
 
 export type ChatMessageScalarFieldEnum = (typeof ChatMessageScalarFieldEnum)[keyof typeof ChatMessageScalarFieldEnum]
+
+
+export const WeeklySummaryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  content: 'content',
+  taskSnapshot: 'taskSnapshot',
+  generatedAt: 'generatedAt'
+} as const
+
+export type WeeklySummaryScalarFieldEnum = (typeof WeeklySummaryScalarFieldEnum)[keyof typeof WeeklySummaryScalarFieldEnum]
 
 
 export const SortOrder = {

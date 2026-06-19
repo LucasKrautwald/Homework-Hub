@@ -192,6 +192,7 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   tasks?: Prisma.TaskListRelationFilter
   chatMessages?: Prisma.ChatMessageListRelationFilter
+  weeklySummary?: Prisma.XOR<Prisma.WeeklySummaryNullableScalarRelationFilter, Prisma.WeeklySummaryWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -203,6 +204,7 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   tasks?: Prisma.TaskOrderByRelationAggregateInput
   chatMessages?: Prisma.ChatMessageOrderByRelationAggregateInput
+  weeklySummary?: Prisma.WeeklySummaryOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -217,6 +219,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   tasks?: Prisma.TaskListRelationFilter
   chatMessages?: Prisma.ChatMessageListRelationFilter
+  weeklySummary?: Prisma.XOR<Prisma.WeeklySummaryNullableScalarRelationFilter, Prisma.WeeklySummaryWhereInput> | null
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -252,6 +255,7 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutUserInput
+  weeklySummary?: Prisma.WeeklySummaryCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -263,6 +267,7 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutUserInput
+  weeklySummary?: Prisma.WeeklySummaryUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -274,6 +279,7 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   chatMessages?: Prisma.ChatMessageUpdateManyWithoutUserNestedInput
+  weeklySummary?: Prisma.WeeklySummaryUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -285,6 +291,7 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutUserNestedInput
+  weeklySummary?: Prisma.WeeklySummaryUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -386,6 +393,20 @@ export type UserUpdateOneRequiredWithoutChatMessagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutChatMessagesInput, Prisma.UserUpdateWithoutChatMessagesInput>, Prisma.UserUncheckedUpdateWithoutChatMessagesInput>
 }
 
+export type UserCreateNestedOneWithoutWeeklySummaryInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWeeklySummaryInput, Prisma.UserUncheckedCreateWithoutWeeklySummaryInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWeeklySummaryInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutWeeklySummaryNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWeeklySummaryInput, Prisma.UserUncheckedCreateWithoutWeeklySummaryInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWeeklySummaryInput
+  upsert?: Prisma.UserUpsertWithoutWeeklySummaryInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWeeklySummaryInput, Prisma.UserUpdateWithoutWeeklySummaryInput>, Prisma.UserUncheckedUpdateWithoutWeeklySummaryInput>
+}
+
 export type UserCreateWithoutTasksInput = {
   id?: string
   email: string
@@ -394,6 +415,7 @@ export type UserCreateWithoutTasksInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutUserInput
+  weeklySummary?: Prisma.WeeklySummaryCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTasksInput = {
@@ -404,6 +426,7 @@ export type UserUncheckedCreateWithoutTasksInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutUserInput
+  weeklySummary?: Prisma.WeeklySummaryUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTasksInput = {
@@ -430,6 +453,7 @@ export type UserUpdateWithoutTasksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chatMessages?: Prisma.ChatMessageUpdateManyWithoutUserNestedInput
+  weeklySummary?: Prisma.WeeklySummaryUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTasksInput = {
@@ -440,6 +464,7 @@ export type UserUncheckedUpdateWithoutTasksInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutUserNestedInput
+  weeklySummary?: Prisma.WeeklySummaryUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutChatMessagesInput = {
@@ -450,6 +475,7 @@ export type UserCreateWithoutChatMessagesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+  weeklySummary?: Prisma.WeeklySummaryCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutChatMessagesInput = {
@@ -460,6 +486,7 @@ export type UserUncheckedCreateWithoutChatMessagesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+  weeklySummary?: Prisma.WeeklySummaryUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutChatMessagesInput = {
@@ -486,6 +513,7 @@ export type UserUpdateWithoutChatMessagesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+  weeklySummary?: Prisma.WeeklySummaryUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutChatMessagesInput = {
@@ -496,6 +524,67 @@ export type UserUncheckedUpdateWithoutChatMessagesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+  weeklySummary?: Prisma.WeeklySummaryUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutWeeklySummaryInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutWeeklySummaryInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutWeeklySummaryInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWeeklySummaryInput, Prisma.UserUncheckedCreateWithoutWeeklySummaryInput>
+}
+
+export type UserUpsertWithoutWeeklySummaryInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWeeklySummaryInput, Prisma.UserUncheckedUpdateWithoutWeeklySummaryInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWeeklySummaryInput, Prisma.UserUncheckedCreateWithoutWeeklySummaryInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWeeklySummaryInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWeeklySummaryInput, Prisma.UserUncheckedUpdateWithoutWeeklySummaryInput>
+}
+
+export type UserUpdateWithoutWeeklySummaryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWeeklySummaryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -547,6 +636,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   chatMessages?: boolean | Prisma.User$chatMessagesArgs<ExtArgs>
+  weeklySummary?: boolean | Prisma.User$weeklySummaryArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -581,6 +671,7 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   chatMessages?: boolean | Prisma.User$chatMessagesArgs<ExtArgs>
+  weeklySummary?: boolean | Prisma.User$weeklySummaryArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -591,6 +682,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     tasks: Prisma.$TaskPayload<ExtArgs>[]
     chatMessages: Prisma.$ChatMessagePayload<ExtArgs>[]
+    weeklySummary: Prisma.$WeeklySummaryPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -995,6 +1087,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tasks<T extends Prisma.User$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   chatMessages<T extends Prisma.User$chatMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$chatMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  weeklySummary<T extends Prisma.User$weeklySummaryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$weeklySummaryArgs<ExtArgs>>): Prisma.Prisma__WeeklySummaryClient<runtime.Types.Result.GetResult<Prisma.$WeeklySummaryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1468,6 +1561,25 @@ export type User$chatMessagesArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ChatMessageScalarFieldEnum | Prisma.ChatMessageScalarFieldEnum[]
+}
+
+/**
+ * User.weeklySummary
+ */
+export type User$weeklySummaryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WeeklySummary
+   */
+  select?: Prisma.WeeklySummarySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WeeklySummary
+   */
+  omit?: Prisma.WeeklySummaryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WeeklySummaryInclude<ExtArgs> | null
+  where?: Prisma.WeeklySummaryWhereInput
 }
 
 /**

@@ -4,9 +4,7 @@ import {
   format,
   isAfter,
   isBefore,
-  isWithinInterval,
   startOfDay,
-  startOfWeek,
 } from "date-fns";
 import { es } from "date-fns/locale";
 import {
@@ -61,7 +59,6 @@ export default async function DashboardPage() {
 
   const today = startOfDay(new Date());
   const weekEnd = endOfWeek(today, { weekStartsOn: 1 });
-  const weekStart = startOfWeek(today, { weekStartsOn: 1 });
 
   const notDone = tasks.filter((t) => t.status !== "DONE");
   const openCount = notDone.length;
@@ -71,13 +68,6 @@ export default async function DashboardPage() {
     (t) => !isBefore(t.dueAt, today) && !isAfter(t.dueAt, weekEnd),
   );
   const later = notDone.filter((t) => isAfter(t.dueAt, weekEnd));
-
-  const completedThisWeek = tasks.filter(
-    (t) =>
-      t.status === "DONE" &&
-      t.completedAt &&
-      isWithinInterval(t.completedAt, { start: weekStart, end: weekEnd }),
-  ).length;
 
   const displayName =
     session.user.name ?? session.user.email?.split("@")[0] ?? "Estudiante";
@@ -116,18 +106,7 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        <WeeklySummaryCard
-          data={{
-            userId: session.user.id,
-            userName: displayName,
-            overdueCount: overdue.length,
-            weekTasks: thisWeek.map((t) => ({
-              title: t.title,
-              dueAt: t.dueAt.toISOString(),
-            })),
-            completedThisWeek,
-          }}
-        />
+        <WeeklySummaryCard />
 
         <div className="grid gap-4 sm:grid-cols-3">
           <StatCard

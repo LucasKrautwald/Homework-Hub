@@ -33,7 +33,7 @@ function Chip({
     <Link
       href={href}
       className={cn(
-        "shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition-all duration-200",
+        "shrink-0 rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-all duration-200 sm:px-4 sm:py-2",
         active
           ? "border-violet-400/40 bg-violet-500/20 text-violet-100 shadow-[0_0_20px_-4px_rgba(139,92,246,0.5)]"
           : "border-white/[0.08] bg-white/[0.04] text-slate-400 backdrop-blur-md hover:border-white/[0.14] hover:bg-white/[0.07] hover:text-slate-200",
@@ -41,6 +41,23 @@ function Chip({
     >
       {children}
     </Link>
+  );
+}
+
+function FilterGroup({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="min-w-0 flex-1 space-y-2">
+      <p className="text-[0.65rem] font-semibold uppercase tracking-widest text-slate-500">
+        {label}
+      </p>
+      <div className="-mx-0.5 flex flex-wrap gap-2 px-0.5">{children}</div>
+    </div>
   );
 }
 
@@ -77,27 +94,43 @@ export function HomeworkFilters({
   ];
 
   return (
-    <div className="space-y-3">
-      <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 scrollbar-none">
-        {categoryFilters.map(({ key, label }) => (
-          <Chip
-            key={key}
-            active={filter === key}
-            href={buildHref(key, priority, query)}
-          >
-            {label}
-          </Chip>
-        ))}
-        <span className="mx-1 w-px shrink-0 self-stretch bg-white/[0.08]" aria-hidden />
-        {priorityFilters.map(({ key, label }) => (
-          <Chip
-            key={key}
-            active={priority === key}
-            href={buildHref(filter, key, query)}
-          >
-            {label}
-          </Chip>
-        ))}
+    <div className="space-y-4">
+      <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-4 shadow-[0_16px_48px_rgba(0,0,0,0.25)] backdrop-blur-[20px] sm:p-5">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-6">
+          <FilterGroup label="Tipo">
+            {categoryFilters.map(({ key, label }) => (
+              <Chip
+                key={key}
+                active={filter === key}
+                href={buildHref(key, priority, query)}
+              >
+                {label}
+              </Chip>
+            ))}
+          </FilterGroup>
+
+          <div
+            className="hidden w-px shrink-0 self-stretch bg-gradient-to-b from-transparent via-white/[0.12] to-transparent sm:block"
+            aria-hidden
+          />
+
+          <div
+            className="h-px w-full shrink-0 bg-gradient-to-r from-transparent via-white/[0.1] to-transparent sm:hidden"
+            aria-hidden
+          />
+
+          <FilterGroup label="Prioridad">
+            {priorityFilters.map(({ key, label }) => (
+              <Chip
+                key={key}
+                active={priority === key}
+                href={buildHref(filter, key, query)}
+              >
+                {label}
+              </Chip>
+            ))}
+          </FilterGroup>
+        </div>
       </div>
 
       <form onSubmit={onSearch} className="flex gap-2">

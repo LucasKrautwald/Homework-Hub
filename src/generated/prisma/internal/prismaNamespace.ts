@@ -386,7 +386,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Task: 'Task',
-  ChatMessage: 'ChatMessage'
+  ChatMessage: 'ChatMessage',
+  WeeklySummary: 'WeeklySummary'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -402,7 +403,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "task" | "chatMessage"
+    modelProps: "user" | "task" | "chatMessage" | "weeklySummary"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -628,6 +629,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    WeeklySummary: {
+      payload: Prisma.$WeeklySummaryPayload<ExtArgs>
+      fields: Prisma.WeeklySummaryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WeeklySummaryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklySummaryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WeeklySummaryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklySummaryPayload>
+        }
+        findFirst: {
+          args: Prisma.WeeklySummaryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklySummaryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WeeklySummaryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklySummaryPayload>
+        }
+        findMany: {
+          args: Prisma.WeeklySummaryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklySummaryPayload>[]
+        }
+        create: {
+          args: Prisma.WeeklySummaryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklySummaryPayload>
+        }
+        createMany: {
+          args: Prisma.WeeklySummaryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WeeklySummaryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklySummaryPayload>[]
+        }
+        delete: {
+          args: Prisma.WeeklySummaryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklySummaryPayload>
+        }
+        update: {
+          args: Prisma.WeeklySummaryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklySummaryPayload>
+        }
+        deleteMany: {
+          args: Prisma.WeeklySummaryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WeeklySummaryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WeeklySummaryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklySummaryPayload>[]
+        }
+        upsert: {
+          args: Prisma.WeeklySummaryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WeeklySummaryPayload>
+        }
+        aggregate: {
+          args: Prisma.WeeklySummaryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWeeklySummary>
+        }
+        groupBy: {
+          args: Prisma.WeeklySummaryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WeeklySummaryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WeeklySummaryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WeeklySummaryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -708,6 +783,17 @@ export const ChatMessageScalarFieldEnum = {
 } as const
 
 export type ChatMessageScalarFieldEnum = (typeof ChatMessageScalarFieldEnum)[keyof typeof ChatMessageScalarFieldEnum]
+
+
+export const WeeklySummaryScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  content: 'content',
+  taskSnapshot: 'taskSnapshot',
+  generatedAt: 'generatedAt'
+} as const
+
+export type WeeklySummaryScalarFieldEnum = (typeof WeeklySummaryScalarFieldEnum)[keyof typeof WeeklySummaryScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -921,6 +1007,7 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   task?: Prisma.TaskOmit
   chatMessage?: Prisma.ChatMessageOmit
+  weeklySummary?: Prisma.WeeklySummaryOmit
 }
 
 /* Types for Logging */

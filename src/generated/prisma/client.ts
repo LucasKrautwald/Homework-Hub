@@ -56,3 +56,8 @@ export type Task = Prisma.TaskModel
  * 
  */
 export type ChatMessage = Prisma.ChatMessageModel
+/**
+ * Model WeeklySummary
+ * 
+ */
+export type WeeklySummary = Prisma.WeeklySummaryModel
