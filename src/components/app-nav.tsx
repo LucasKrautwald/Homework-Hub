@@ -84,7 +84,7 @@ export function AppNav() {
           <button
             type="button"
             className="ml-1 inline-flex items-center gap-1.5 rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2 text-sm font-medium text-slate-400 transition hover:border-rose-500/25 hover:bg-rose-500/10 hover:text-rose-300"
-            onClick={() => signOut({ callbackUrl: "/login" })}
+            onClick={() => signOut({ callbackUrl: "/" })}
           >
             <LogOut className="h-4 w-4" />
             <span className="hidden sm:inline">Cerrar sesión</span>
